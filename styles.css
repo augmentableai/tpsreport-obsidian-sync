@@ -1,0 +1,178 @@
+/* TPSReport Sync Plugin Styles */
+
+
+
+.tps-status-bar {
+
+  cursor: default;
+
+}
+
+
+
+.tps-status-bar.tps-warning {
+
+  color: #ff4444;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  animation: pulse 2s infinite;
+
+}
+
+
+
+.tps-status-bar.tps-warning:hover {
+
+  color: #ff6666;
+
+  text-decoration: underline;
+
+}
+
+
+
+@keyframes pulse {
+
+  0%, 100% {
+
+    opacity: 1;
+
+  }
+
+  50% {
+
+    opacity: 0.7;
+
+  }
+
+}
+
+
+
+/* File Explorer Decoration */
+
+.tps-icon {
+
+  margin-right: 4px;
+
+  color: var(--interactive-accent);
+
+  font-size: 14px;
+
+  width: 16px;
+
+  height: 16px;
+
+  display: inline-block;
+
+  text-align: center;
+
+  /* Use a pure CSS icon or SVG background */
+
+}
+
+
+
+/* Add Lucide 'link' icon via mask or content */
+
+.tps-icon::before {
+
+  content: "⚡"; /* Fallback */
+
+  font-family: var(--font-text);
+
+}
+
+
+
+.tps-mapped-root .nav-file-title-content {
+
+  color: var(--interactive-accent);
+
+  font-weight: 600;
+
+}
+
+
+
+.tps-mapped-child .nav-file-title-content {
+
+  /* Subtle indicator for children */
+
+  border-left: 2px solid var(--interactive-accent);
+
+  padding-left: 4px;
+
+}
+
+.tps-verify-container {
+
+  display: flex;
+
+  align-items: center;
+
+  padding: 0.75em;
+
+  background: var(--background-secondary);
+
+  border-radius: 4px;
+
+  margin-top: 0.5em;
+
+}
+
+
+
+.tps-verify-container button {
+
+  padding: 0.5em 1em;
+
+  background: var(--interactive-accent);
+
+  color: var(--text-on-accent);
+
+  border: none;
+
+  border-radius: 4px;
+
+  cursor: pointer;
+
+  font-weight: 600;
+
+  transition: opacity 0.2s;
+
+}
+
+
+
+.tps-verify-container button:hover {
+
+  opacity: 0.8;
+
+}
+
+
+
+.tps-verify-container button:disabled {
+
+  opacity: 0.5;
+
+  cursor: not-allowed;
+
+}
+
+
+
+.tps-verify-status {
+
+  font-size: 0.9em;
+
+  margin-left: 0.5em;
+
+}
+
+
+
