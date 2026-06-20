@@ -550,11 +550,11 @@ const GUIDANCE_FM_KEYS = [
   "research_brief",
 ];
 
-// Production defaults. The plugin requires a HiFi-WP account; these point at the
+// Production defaults. The plugin requires a TPSReport account; these point at the
 // managed TPSReport production services. The API base URL is fixed in production
 // and is NOT user-editable (forced to this value on load — see onload).
 const DEFAULT_API_BASE_URL = "https://wordpressgpt-api-325927718367.us-central1.run.app";
-const DEFAULT_SITE_URL = "https://wp.hifibots.com";
+const DEFAULT_SITE_URL = "https://tpsreport.pro";
 
 const RAG_FM_KEYS = [
   "summary",
@@ -1742,7 +1742,7 @@ class TPSReportSyncSettingTab extends PluginSettingTab {
 
     new Setting(containerEl)
       .setName("TPSReport API key")
-      .setDesc("Your obs_ key generated from your HiFi-WP dashboard. Stored locally in Obsidian plugin data.")
+      .setDesc("Your obs_ key generated from your TPSReport dashboard. Stored locally in Obsidian plugin data.")
       .addText((text) => {
         text.inputEl.type = "password";
         text
