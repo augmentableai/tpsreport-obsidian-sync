@@ -1,124 +1,157 @@
-# TPSReport
+# TPSReport — Obsidian Plugin
 
-Obsidian companion plugin for **TPSReport AI Brain & Knowledge Management**. Publish and sync local Markdown research folders from your vault into TPSReport so they can be rendered, managed, indexed, and queried from your TPSReport workspace.
+**Sync local research folders to [TPSReport](https://tpsreport.pro) — graph-native AI knowledge management built for teams, agents, and retrieval.**
 
-**Publisher:** Augmentable LLC  
-**Product site:** [tpsreport.pro](https://tpsreport.pro)  
-**Privacy:** [tpsreport.pro/privacy](https://tpsreport.pro/privacy) | **Terms:** [tpsreport.pro/terms](https://tpsreport.pro/terms)
+[![TPSReport](https://img.shields.io/badge/Product-tpsreport.pro-2563eb?style=for-the-badge)](https://tpsreport.pro)
+[![Obsidian community plugin](https://img.shields.io/badge/Obsidian-Community%20Plugin-7c3aed?style=for-the-badge)](https://community.obsidian.md/plugins?tpsreport-sync)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+[![Version](https://img.shields.io/badge/version-1.2.1-blue?style=for-the-badge)](https://github.com/augmentableai/tpsreport-obsidian-sync/releases)
 
-## What it does
+> **Official Obsidian companion for [TPSReport AI Brain & Knowledge Management](https://tpsreport.pro).**  
+> Write in your vault. Publish structured knowledge reports. Sync Markdown, metadata, and images to a cloud workspace built for Graph RAG, access control, and agent-ready retrieval.
 
-TPSReport connects your local writing workflow to your TPSReport cloud workspace.
+**Publisher:** [Augmentable LLC](https://tpsreport.pro)  
+**Home:** [tpsreport.pro](https://tpsreport.pro) · **Privacy:** [tpsreport.pro/privacy](https://tpsreport.pro/privacy) · **Terms:** [tpsreport.pro/terms](https://tpsreport.pro/terms)
 
-- Publish a vault folder as a new TPSReport knowledge report
-- Sync Markdown files, nested folders, frontmatter metadata, and local images
-- Pull report updates from TPSReport back into your vault
-- Preserve stable `node_id` frontmatter for ID-first reconciliation
-- Detect conflicts and create conflict copies instead of silently discarding edits
-- Choose enabled report destinations returned by your TPSReport account
-- Optionally enable RAG indexing for report content
+---
 
-This plugin is for **knowledge management and report synchronization**. AI generation, indexing, public/private access control, and rendered report management happen in your connected TPSReport account.
+## What is TPSReport?
 
-## Requirements
+**[TPSReport](https://tpsreport.pro)** turns scattered notes and research into **graph-structured intelligence** — not just files in a folder, but connected knowledge that AI agents and humans can navigate.
 
-- A **TPSReport account** at [tpsreport.pro](https://tpsreport.pro)
-- A TPSReport API key (`obs_...`) generated from your TPSReport dashboard
-- Obsidian desktop. This plugin is desktop-only because it syncs vault files and local images.
+Most tools treat knowledge as isolated documents. TPSReport helps you **curate, codify, and connect** expertise into reports and collections optimized for:
 
-## Configure
+- **Graph RAG** — vector search plus explicit relationships, categories, and metadata  
+- **Knowledge operations** — freshness, staleness alerts, and usage-aware maintenance  
+- **Multi-scope collections** — personal research, team wikis, and org-wide knowledge bases  
+- **Rendered reports** — publish, share, and control access from your [TPSReport workspace](https://tpsreport.pro)
 
-Open **Settings -> TPSReport** in Obsidian:
+**This plugin** is the bridge between **Obsidian** (where you write) and **[TPSReport](https://tpsreport.pro)** (where you manage, index, query, and deliver knowledge at scale).
+
+→ [Learn more about TPSReport](docs/about-tpsreport.md) · [Use cases](docs/use-cases.md) · [FAQ](docs/faq.md)
+
+---
+
+## Why use this plugin?
+
+| You want to… | TPSReport + Obsidian gives you… |
+| --- | --- |
+| Publish vault research as structured reports | One-click **Publish as New Report** from any folder |
+| Keep local notes and cloud reports in sync | Bidirectional push/pull with stable `node_id` identity |
+| Improve AI retrieval quality | Rich YAML frontmatter (`keywords`, `intents`, `entities`, …) synced to Graph RAG |
+| Sync images with Markdown | Optional embedded image upload/download |
+| Avoid silent overwrites | Conflict detection + reviewable conflict copies |
+| Control visibility & destinations | Per-report visibility, edit scope, and account destinations |
+
+---
+
+## Install
+
+### From Obsidian Community Plugins (recommended)
+
+1. Open **Settings → Community plugins → Browse**
+2. Search for **TPSReport**
+3. Install and enable
+
+### Manual / beta install
+
+Download `main.js`, `manifest.json`, and `styles.css` from the [latest release](https://github.com/augmentableai/tpsreport-obsidian-sync/releases/latest).
+
+Requires a free **[TPSReport account](https://tpsreport.pro)** and an API key (`obs_...`) from your dashboard.
+
+---
+
+## Quick start
+
+1. **Sign up** at **[tpsreport.pro](https://tpsreport.pro)**
+2. **Generate an API key** in your TPSReport dashboard (`obs_...`)
+3. In Obsidian: **Settings → TPSReport** → paste key → **Test Connection**
+4. Right-click a vault folder → **Publish as New Report**
+5. Push, pull, and manage sync from the command palette or folder menu
+
+---
+
+## Features
+
+- Publish Obsidian folders as **TPSReport knowledge reports**
+- Sync Markdown, nested folders, frontmatter, and local images
+- Pull cloud updates back into mapped vault folders
+- Preserve stable **`node_id`** frontmatter for ID-first reconciliation
+- Detect conflicts; create conflict copies instead of silent data loss
+- Choose account-enabled **report destinations**
+- Optionally enable **RAG indexing** for report content in your [TPSReport knowledge base](https://tpsreport.pro)
+
+AI generation, indexing, rendered report hosting, and access control run in your **[TPSReport cloud workspace](https://tpsreport.pro)** — this plugin handles **local ↔ cloud synchronization**.
+
+---
+
+## Configuration
+
+Open **Settings → TPSReport** in Obsidian:
 
 | Setting | Details |
-| ------- | ------- |
-| **API Base URL** | TPSReport backend URL. Production is managed by TPSReport. |
-| **TPSReport API Key** | Your `obs_...` key. Stored locally in Obsidian plugin data. |
-| **Frontmatter ID field** | Stable identity field, recommended: `node_id`. |
-| **Default report settings** | Visibility, edit scope, content format, RAG setting, and destination defaults for newly published reports. |
-| **Image sync** | Upload local embedded images on push and download remote report images on pull. |
-| **Folder mapping** | Map local vault folders to cloud TPSReport reports. |
+| --- | --- |
+| **TPSReport API Key** | Your `obs_...` key. Stored locally in plugin data. |
+| **Frontmatter ID field** | Stable identity field (recommended: `node_id`). |
+| **Default report settings** | Visibility, edit scope, content format, RAG, destination defaults. |
+| **Image sync** | Upload embedded images on push; download on pull. |
+| **Folder mapping** | Map vault folders to cloud TPSReport reports. |
 
-Run **Test Connection** after adding your API key.
+---
 
-## Basic workflow
+## Frontmatter for better retrieval
 
-1. Create or choose a vault folder for a report.
-2. Right-click the folder and choose **Publish as New Report**.
-3. Pick visibility, edit scope, content format, and destination.
-4. Push the folder to TPSReport.
-5. Open the rendered report in your TPSReport workspace.
-6. Re-run sync commands as your local notes change.
-
-## Frontmatter metadata
-
-Frontmatter is optional. A Markdown file with no frontmatter still syncs normally; the plugin creates TPSReport bookkeeping fields such as `node_id`, `sync_status`, `last_synced`, and `tps_content_hash` when needed.
-
-For higher retrieval accuracy, add YAML properties to source documents. TPSReport reads normal YAML frontmatter, including multiline arrays and nested objects. Useful retrieval fields include `summary`, `keywords`, `tags`, `intents`, `scenarios`, `retrieval_hint`, `entities`, `topics`, `brands`, `product_skus`, `product_categories`, `region`, `audience`, and `metadata_canary`.
-
-Example:
+Add YAML properties to improve Graph RAG accuracy in [TPSReport](https://tpsreport.pro):
 
 ```yaml
 ---
-summary: AP-300 commercial-light purifier facts and filter intervals.
-keywords:
-  - AP-300
-  - CADR 420
-  - dental office
-tags:
-  - clearbreeze
-  - catalog
-intents:
-  - product_lookup
-  - business_recommendation
-product_skus:
-  - AP-300
-  - AP300-H13
-metadata_canary: zephyr-17
+summary: Short retrieval-friendly summary of this note.
+keywords: [product-name, category, region]
+tags: [research, catalog]
+intents: [product_lookup, business_recommendation]
+entities: [Brand Name, Product SKU]
+retrieval_hint: One sentence a search agent should match on.
 ---
 ```
 
-## External services
+Supported fields include `summary`, `keywords`, `tags`, `intents`, `scenarios`, `entities`, `topics`, `brands`, `product_skus`, `audience`, `region`, and more.
 
-This plugin connects to TPSReport services operated by **Augmentable LLC**. A TPSReport account and API key are required for cloud sync.
+---
 
-**Service URLs**
+## Privacy & data handling
 
-- Web app: `https://tpsreport.pro`
-- API: `https://wordpressgpt-api-325927718367.us-central1.run.app`
+- **No vault content is sent** until you configure an API key and explicitly publish, push, or pull.
+- API keys are stored **locally** in Obsidian and sent only to the TPSReport API.
+- Synced content is governed by your report visibility settings in [TPSReport](https://tpsreport.pro).
 
-**What is sent, when, and why**
+Full policy: **[tpsreport.pro/privacy](https://tpsreport.pro/privacy)** · Terms: **[tpsreport.pro/terms](https://tpsreport.pro/terms)**
 
-- **Connection verification:** your API key is sent to verify your TPSReport account and load available report destinations.
-- **Report publishing:** report title, description, visibility, edit scope, content format, and destination are sent when you publish a new report.
-- **Markdown sync:** Markdown body content, selected frontmatter metadata, file paths, folder structure, content hashes, and local modification timestamps are sent when you push a mapped folder.
-- **Image sync:** local images embedded in synced Markdown are uploaded when image sync is enabled.
-- **Pull sync:** report tree, document content, guidance metadata, and image assets are downloaded when you pull from TPSReport.
-- **RAG indexing setting:** when enabled for a report, content can be indexed in your TPSReport knowledge base for retrieval.
+---
 
-No vault content is sent until you configure an API key and explicitly publish, push, or pull a mapped report.
+## Links
 
-## Privacy
+| Resource | URL |
+| --- | --- |
+| **TPSReport home** | [tpsreport.pro](https://tpsreport.pro) |
+| **What is TPSReport?** | [docs/about-tpsreport.md](docs/about-tpsreport.md) |
+| **Use cases** | [docs/use-cases.md](docs/use-cases.md) |
+| **FAQ** | [docs/faq.md](docs/faq.md) |
+| **Plugin releases** | [GitHub Releases](https://github.com/augmentableai/tpsreport-obsidian-sync/releases) |
+| **Obsidian listing** | [community.obsidian.md](https://community.obsidian.md/plugins?tpsreport-sync) |
+| **Privacy** | [tpsreport.pro/privacy](https://tpsreport.pro/privacy) |
+| **Terms** | [tpsreport.pro/terms](https://tpsreport.pro/terms) |
+| **Support** | [arvind@augmentable.ai](mailto:arvind@augmentable.ai) |
 
-Your TPSReport API key is stored locally in Obsidian plugin data and sent only to the configured TPSReport API. Synced content is stored in your TPSReport workspace and governed by your report visibility settings.
+---
 
-For full details on how Augmentable LLC handles personal data, see the [TPSReport Privacy Policy](https://tpsreport.pro/privacy).
+## Keywords
 
-## Safety notes
+Obsidian plugin · knowledge management · research sync · Markdown sync · Graph RAG · AI knowledge base · institutional knowledge · note publishing · vault sync · TPSReport · [tpsreport.pro](https://tpsreport.pro) · Augmentable LLC
 
-- Push can update remote report content.
-- Pull can create, modify, rename, or archive files inside mapped vault folders.
-- Delete sync only applies to mapped report folders and should be used after reviewing the target mapping.
-- Conflicts are marked in frontmatter and remote conflict copies are created for review.
+---
 
-## Support
+## License
 
-- Product site: [tpsreport.pro](https://tpsreport.pro)
-- Privacy policy: [tpsreport.pro/privacy](https://tpsreport.pro/privacy)
-- Terms of service: [tpsreport.pro/terms](https://tpsreport.pro/terms)
+MIT — see [LICENSE](LICENSE).
 
-## Version
-
-Current plugin version: `1.2.1`
-
-Ship updates by bumping `manifest.json` `version`, updating `versions.json`, creating a matching GitHub release tag, and attaching `main.js`, `manifest.json`, and `styles.css`.
+**Current version:** `1.2.1` · Updates ship via [GitHub releases](https://github.com/augmentableai/tpsreport-obsidian-sync/releases) tagged to match `manifest.json`.
