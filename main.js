@@ -286,7 +286,7 @@ function mergeFrontmatterBlocks(blocks) {
   return merged;
 }
 
-// Contract mirrors (kept in sync with .cursor/skills/tpsreport-skill/
+// Contract mirrors (kept in sync with augmentableai/skills tpsreport-knowledge-base-generation
 // metadata-contract.yaml). Used by the Gatekeeper health check.
 const KB_REQUIRED_CORE_KEYS = [
   "summary",

@@ -1,11 +1,10 @@
-# Moved → `tpsreport-skill`
+# Moved → `augmentableai/skills`
 
-The skill was renamed for discoverability.
+This path is a legacy redirect. The skill was renamed and moved.
 
-**Canonical repo:** https://github.com/augmentableai/tpsreport-skill
-
-**Bundled copy:** [../tpsreport-skill/](../tpsreport-skill/)
+**Canonical repo:** https://github.com/augmentableai/skills  
+**Skill:** `skills/tpsreport-knowledge-base-generation/`
 
 ```bash
-npx skills add augmentableai/tpsreport-skill -y
+npx skills add augmentableai/skills --skill tpsreport-knowledge-base-generation -y
 ```

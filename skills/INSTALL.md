@@ -1,6 +1,6 @@
 # Install guide — plugin + skills
 
-Step-by-step setup for **TPSReport Obsidian sync** and the **TPSReport Skill** agent skill.
+Step-by-step setup for **TPSReport Obsidian sync** and the **TPSReport KB generation** agent skill.
 
 ---
 
@@ -47,33 +47,32 @@ https://github.com/augmentableai/tpsreport-obsidian-sync
 
 ## Part 2 — TPSReport KB skill
 
-The skill lives at **`tpsreport-skill/`** in this repo.
+The canonical skill lives in **[augmentableai/skills](https://github.com/augmentableai/skills)** at `skills/tpsreport-knowledge-base-generation/`.
 
-### Cursor — project skill (recommended)
-
-Use when one vault/repo is your KB home:
+### Recommended — npx / skills.sh
 
 ```bash
-# from your vault or monorepo root
-mkdir -p .cursor/skills
-git clone https://github.com/augmentableai/tpsreport-obsidian-sync.git /tmp/tpsreport-obsidian-sync
-cp -r /tmp/tpsreport-obsidian-sync/tpsreport-skill .cursor/skills/
+npx skills add augmentableai/skills --skill tpsreport-knowledge-base-generation -y
 pip install pyyaml
 ```
 
-Expected layout:
+Browse: [skills.sh](https://skills.sh) · Docs: [skills.sh/docs](https://skills.sh/docs)
+
+### Cursor — project skill layout
+
+After install, expect:
 
 ```text
 your-vault/
 ├── My_KB_Folder/
 │   ├── 00_CONTEXT.md
 │   └── 01_Overview/
-└── .cursor/tpsreport-skill/
+└── .cursor/skills/tpsreport-knowledge-base-generation/
     ├── SKILL.md
-    ├── metadata-contract.yaml
-    ├── kb_lint.py
-    ├── KB_AGENT_PROMPT.md
-    └── README.md
+    └── references/
+        ├── kb_lint.py
+        ├── metadata-contract.yaml
+        └── KB_AGENT_PROMPT.md
 ```
 
 Cursor auto-discovers `.cursor/skills/*/SKILL.md`.
@@ -83,47 +82,22 @@ Cursor auto-discovers `.cursor/skills/*/SKILL.md`.
 Same folder under:
 
 ```text
-Windows:  %USERPROFILE%\.cursor\skills\tpsreport-skill\
-macOS:    ~/.cursor/tpsreport-skill/
-Linux:    ~/.cursor/tpsreport-skill/
+Windows:  %USERPROFILE%\.cursor\skills\tpsreport-knowledge-base-generation\
+macOS:    ~/.cursor/skills/tpsreport-knowledge-base-generation/
+Linux:    ~/.cursor/skills/tpsreport-knowledge-base-generation/
 ```
-
-### skills.sh / npx
-
-```bash
-npx skills add augmentableai/tpsreport-obsidian-sync --skill tpsreport-skill -y
-```
-
-Browse: [skills.sh](https://skills.sh) · Docs: [skills.sh/docs](https://skills.sh/docs)
-
-To publish updates after pushing to GitHub:
-
-```bash
-cd tpsreport-skill
-npx skills publish
-```
-
-### agentskill.sh
-
-Import the whole repo (finds all `SKILL.md` files):
-
-1. Go to [agentskill.sh/submit](https://agentskill.sh/submit)
-2. Paste: `https://github.com/augmentableai/tpsreport-obsidian-sync`
-3. Connect GitHub for verified badge + auto-sync on push
 
 ### Claude Code
 
 ```bash
-# project-level
-mkdir -p .claude/skills
-cp -r tpsreport-skill .claude/tpsreport-skill
+npx skills add augmentableai/skills --skill tpsreport-knowledge-base-generation -y
 ```
 
-Or install via skills.sh if your Claude Code build supports `npx skills add`.
+Or copy manually into `.claude/skills/tpsreport-knowledge-base-generation/`.
 
 ### Codex / other agents
 
-Point the agent at the raw SKILL.md URL or copy the folder into your project's skills directory. Use **[KB_AGENT_PROMPT.md](tpsreport-skill/KB_AGENT_PROMPT.md)** as a starter prompt.
+Point the agent at the raw SKILL.md URL or copy the folder from the skills repo. Use **[KB_AGENT_PROMPT.md](https://github.com/augmentableai/skills/blob/main/skills/tpsreport-knowledge-base-generation/references/KB_AGENT_PROMPT.md)** as a starter prompt.
 
 ---
 
@@ -137,7 +111,7 @@ Point the agent at the raw SKILL.md URL or copy the folder into your project's s
 ### Linter
 
 ```bash
-python .cursor/tpsreport-skill/kb_lint.py path/to/Your_KB/
+python .cursor/skills/tpsreport-knowledge-base-generation/references/kb_lint.py path/to/Your_KB/
 ```
 
 Fix errors until exit **0**. Warnings are optional unless you pass `--strict`.
@@ -155,7 +129,7 @@ Command palette → **TPSReport: Gatekeeper health check** on a mapped folder. S
 | `ModuleNotFoundError: yaml` | `pip install pyyaml` |
 | Gatekeeper fails but linter passes | Reload plugin; confirm `metadata-contract.yaml` matches plugin version |
 | Push 404 on settings | Update plugin to latest [release](https://github.com/augmentableai/tpsreport-obsidian-sync/releases) |
-| Skill not picked up in Cursor | Confirm path is `.cursor/tpsreport-skill/SKILL.md` and restart Cursor |
+| Skill not picked up in Cursor | Confirm path is `.cursor/skills/tpsreport-knowledge-base-generation/SKILL.md` and restart Cursor |
 | `npx skills add` not found | Install Node.js; see [skills.sh/docs](https://skills.sh/docs) |
 
 ---
@@ -164,4 +138,4 @@ Command palette → **TPSReport: Gatekeeper health check** on a mapped folder. S
 
 - Read **[WORKFLOW.md](WORKFLOW.md)** for the full KB lifecycle
 - Copy examples from **[examples/](examples/)**
-- Use **[KB_AGENT_PROMPT.md](tpsreport-skill/KB_AGENT_PROMPT.md)** to kick off agent authoring
+- Use **[KB_AGENT_PROMPT.md](https://github.com/augmentableai/skills/blob/main/skills/tpsreport-knowledge-base-generation/references/KB_AGENT_PROMPT.md)** to kick off agent authoring

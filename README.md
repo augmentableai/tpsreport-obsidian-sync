@@ -4,7 +4,7 @@
 
 [![TPSReport](https://img.shields.io/badge/TPSReport-tpsreport.pro-2563eb?style=for-the-badge)](https://tpsreport.pro)
 [![Obsidian community plugin](https://img.shields.io/badge/Obsidian-Community%20Plugin-7c3aed?style=for-the-badge)](https://community.obsidian.md/plugins/tpsreport-sync)
-[![skills.sh skill](https://img.shields.io/badge/skills.sh-tpsreport--skill-111?style=for-the-badge)](https://skills.sh/augmentableai/tpsreport-skill)
+[![skills.sh skill](https://img.shields.io/badge/skills.sh-tpsreport--kb-111?style=for-the-badge)](https://skills.sh/augmentableai/skills)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.2.2-blue?style=for-the-badge)](https://github.com/augmentableai/tpsreport-obsidian-sync/releases)
 
@@ -29,9 +29,9 @@ Most tools treat knowledge as isolated documents. TPSReport helps you **curate, 
 
 **This plugin** is the bridge between **Obsidian** (where you write) and **[TPSReport](https://tpsreport.pro)** (where you manage, index, query, and deliver knowledge at scale).
 
-**→ [Skills & resources hub](skills/README.md)** — agent workflows, install guides, frontmatter examples, [skills.sh](https://skills.sh) listing
+**→ [Skills & resources hub](https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/skills/README.md)** — agent workflows, install guides, frontmatter examples, [skills.sh](https://skills.sh) listing
 
-→ [Learn more about TPSReport](docs/about-tpsreport.md) · [Use cases](docs/use-cases.md) · [FAQ](docs/faq.md)
+→ [Learn more about TPSReport](https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/docs/about-tpsreport.md) · [Use cases](https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/docs/use-cases.md) · [FAQ](https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/docs/faq.md)
 
 ---
 
@@ -125,26 +125,23 @@ Supported fields include `summary`, `keywords`, `tags`, `intents`, `scenarios`, 
 
 ## KB authoring skills & resources
 
-[![skills.sh](https://skills.sh/b/augmentableai/tpsreport-skill)](https://skills.sh/augmentableai/tpsreport-skill)
+[![skills.sh](https://skills.sh/b/augmentableai/skills)](https://skills.sh/augmentableai/skills)
 
-**TPSReport Skill** by Augmentable.ai — [`augmentableai/tpsreport-skill`](https://github.com/augmentableai/tpsreport-skill)
+**TPSReport KB generation skill** by Augmentable.ai — [`augmentableai/skills`](https://github.com/augmentableai/skills)
 
 | Resource | Link |
 | --- | --- |
-| **Skills hub** | [skills/README.md](skills/README.md) |
-| **Install guide** | [skills/INSTALL.md](skills/INSTALL.md) |
-| **Workflow** | [skills/WORKFLOW.md](skills/WORKFLOW.md) |
-| **Examples** | [skills/examples/](skills/examples/) |
-| **TPSReport KB skill** | [tpsreport-skill/](tpsreport-skill/) |
-| **Agent prompt template** | [tpsreport-skill/KB_AGENT_PROMPT.md](tpsreport-skill/KB_AGENT_PROMPT.md) |
-| **List on skills.sh** | [skills/DIRECTORIES.md](skills/DIRECTORIES.md) |
+| **Skills hub** | [skills/README.md](https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/skills/README.md) |
+| **Install guide** | [skills/INSTALL.md](https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/skills/INSTALL.md) |
+| **Workflow** | [skills/WORKFLOW.md](https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/skills/WORKFLOW.md) |
+| **Examples** | [skills/examples/](https://github.com/augmentableai/tpsreport-obsidian-sync/tree/main/skills/examples) |
+| **Canonical skill (SKILL.md)** | [tpsreport-knowledge-base-generation](https://github.com/augmentableai/skills/tree/main/skills/tpsreport-knowledge-base-generation) |
+| **Agent prompt template** | [KB_AGENT_PROMPT.md](https://github.com/augmentableai/skills/blob/main/skills/tpsreport-knowledge-base-generation/references/KB_AGENT_PROMPT.md) |
+| **Directory listing guide** | [skills/DIRECTORIES.md](https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/skills/DIRECTORIES.md) |
 
 ```bash
-# Install skill (Cursor)
-cp -r tpsreport-skill .cursor/skills/
-
-# Or via skills.sh
-npx skills add augmentableai/tpsreport-obsidian-sync --skill tpsreport-skill -y
+# Install skill (recommended)
+npx skills add augmentableai/skills --skill tpsreport-knowledge-base-generation -y
 ```
 
 The skill covers seed → write → RAG metadata → lint → push. The linter shares the same frontmatter contract as the plugin **Gatekeeper**.
@@ -166,14 +163,14 @@ Full policy: **[tpsreport.pro/privacy](https://tpsreport.pro/privacy)** · Terms
 | Resource | URL |
 | --- | --- |
 | **TPSReport home** | [tpsreport.pro](https://tpsreport.pro) |
-| **What is TPSReport?** | [docs/about-tpsreport.md](docs/about-tpsreport.md) |
-| **Use cases** | [docs/use-cases.md](docs/use-cases.md) |
-| **FAQ** | [docs/faq.md](docs/faq.md) |
+| **What is TPSReport?** | [docs/about-tpsreport.md](https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/docs/about-tpsreport.md) |
+| **Use cases** | [docs/use-cases.md](https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/docs/use-cases.md) |
+| **FAQ** | [docs/faq.md](https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/docs/faq.md) |
 | **Plugin releases** | [GitHub Releases](https://github.com/augmentableai/tpsreport-obsidian-sync/releases) |
 | **Obsidian listing (official)** | [community.obsidian.md/plugins/tpsreport-sync](https://community.obsidian.md/plugins/tpsreport-sync) |
-| **KB authoring skills** | [skills/](skills/) |
-| **TPSReport Skill (canonical)** | [github.com/augmentableai/tpsreport-skill](https://github.com/augmentableai/tpsreport-skill) |
-| **skills.sh install** | `npx skills add augmentableai/tpsreport-skill -y` |
+| **KB authoring skills hub** | [skills/](https://github.com/augmentableai/tpsreport-obsidian-sync/tree/main/skills) |
+| **Skills repo (canonical)** | [github.com/augmentableai/skills](https://github.com/augmentableai/skills) |
+| **skills.sh install** | `npx skills add augmentableai/skills --skill tpsreport-knowledge-base-generation -y` |
 | **Privacy** | [tpsreport.pro/privacy](https://tpsreport.pro/privacy) |
 | **Terms** | [tpsreport.pro/terms](https://tpsreport.pro/terms) |
 | **Support** | [arvind@augmentable.ai](mailto:arvind@augmentable.ai) |

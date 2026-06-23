@@ -1,23 +1,10 @@
 # Skill directories & backlinks
 
-Where to list **TPSReport Obsidian plugin** and **TPSReport Skill** skill for discovery and SEO.
+Where to list **TPSReport Obsidian plugin** and **TPSReport KB generation skill** for discovery and SEO.
 
-**Repo:** https://github.com/augmentableai/tpsreport-obsidian-sync  
-**Canonical skill repo (agentskill.sh / skills.sh):** https://github.com/augmentableai/tpsreport-skill
-
-Also bundled in plugin repo: `tpsreport-skill/` folder.
-
-### agentskill.sh — submit options
-
-**Option A — dedicated skill repo (recommended for agentskill.sh):**
-```
-augmentableai/tpsreport-skill
-```
-
-**Option B — plugin monorepo:**
-```
-augmentableai/tpsreport-obsidian-sync
-```
+**Plugin repo:** https://github.com/augmentableai/tpsreport-obsidian-sync  
+**Canonical skills repo:** https://github.com/augmentableai/skills  
+**Skill path:** `skills/tpsreport-knowledge-base-generation/`  
 **Official plugin listing:** https://community.obsidian.md/plugins/tpsreport-sync
 
 ---
@@ -28,14 +15,14 @@ augmentableai/tpsreport-obsidian-sync
 
 skills.sh is a **leaderboard driven by install telemetry**:
 
-1. Host skill in a **public GitHub repo** with valid `SKILL.md` ✓
-2. Users run **`npx skills add owner/repo`** — each install sends anonymous telemetry
+1. Host skills in a **public GitHub repo** with valid `skills/{name}/SKILL.md` ✓
+2. Users run **`npx skills add owner/repo --skill name`** — each install sends anonymous telemetry
 3. After enough installs, the skill appears in [skills.sh](https://skills.sh) search & rankings
 
-**Subfolder skills** (like ours) require `--full-depth`:
+**Install command:**
 
 ```bash
-npx skills add augmentableai/tpsreport-skill -y
+npx skills add augmentableai/skills --skill tpsreport-knowledge-base-generation -y
 ```
 
 **To seed your own listing:** run the install command yourself (and share the command in README). That counts as the first install event.
@@ -43,10 +30,8 @@ npx skills add augmentableai/tpsreport-skill -y
 **Badge** (add to README after installs accumulate):
 
 ```markdown
-[![skills.sh](https://skills.sh/b/augmentableai/tpsreport-skill)](https://skills.sh/augmentableai/tpsreport-skill)
+[![skills.sh](https://skills.sh/b/augmentableai/skills)](https://skills.sh/augmentableai/skills)
 ```
-
-For a **submit form with webhook sync**, use [agentskill.sh/submit](https://agentskill.sh/submit) instead.
 
 ---
 
@@ -55,27 +40,20 @@ For a **submit form with webhook sync**, use [agentskill.sh/submit](https://agen
 | Directory | Action | URL |
 |-----------|--------|-----|
 | **skills.sh** | Share install command; run once yourself to seed telemetry | [skills.sh](https://skills.sh) · [docs](https://skills.sh/docs) |
-| **agentskill.sh** | Submit GitHub repo URL (has webhook sync) | [agentskill.sh/submit](https://agentskill.sh/submit) |
-| **GitHub** | Topics on repo (already set): `obsidian-plugin`, `tpsreport`, `cursor-skill`, `knowledge-base`, `graph-rag`, `agent-skills` | [Repo settings](https://github.com/augmentableai/tpsreport-obsidian-sync) |
-| **tpsreport.pro** | Link plugin listing + `skills/` path from product docs | [tpsreport.pro](https://tpsreport.pro) |
+| **GitHub** | Topics on skills repo: `tpsreport`, `cursor-skill`, `knowledge-base`, `graph-rag`, `agent-skills` | [Repo settings](https://github.com/augmentableai/skills) |
+| **GitHub** | Topics on plugin repo: `obsidian-plugin`, `tpsreport` | [Repo settings](https://github.com/augmentableai/tpsreport-obsidian-sync) |
+| **tpsreport.pro** | Link plugin listing + skills install from product docs | [tpsreport.pro](https://tpsreport.pro) |
 | **Obsidian forum** | Showcase post: plugin + KB skill workflow | [forum.obsidian.md](https://forum.obsidian.md) |
 
 ### Install commands (skills.sh)
 
 ```bash
-# End users — skill lives in tpsreport-skill/
-npx skills add augmentableai/tpsreport-skill -y
+# End users
+npx skills add augmentableai/skills --skill tpsreport-knowledge-base-generation -y
 
 # Maintainer — seed your own skills.sh telemetry (run once after pushing)
-npx skills add augmentableai/tpsreport-skill -y
+npx skills add augmentableai/skills --skill tpsreport-knowledge-base-generation -y
 ```
-
-### agentskill.sh webhook (instant sync)
-
-After claiming the repo on agentskill.sh:
-
-- Webhook URL: `https://agentskill.sh/api/webhooks/github`
-- Events: **push** only
 
 ---
 
@@ -105,7 +83,7 @@ These index public GitHub repos over time. Stars, installs, and README quality h
 | Item | Status / action |
 |------|-----------------|
 | Community listing | **Live:** [community.obsidian.md/plugins/tpsreport-sync](https://community.obsidian.md/plugins/tpsreport-sync) |
-| Listing description | May still say "HiFi-WP" — update via PR to [obsidian-releases](https://github.com/obsidianmd/obsidian-releases) |
+| README links | Use **full GitHub URLs** in plugin README so links work on the community listing page |
 | Version updates | New GitHub release only; no new directory PR for routine bumps |
 
 ---
@@ -121,7 +99,7 @@ These index public GitHub repos over time. Stars, installs, and README quality h
 **Skill install:**
 
 ```markdown
-npx skills add augmentableai/tpsreport-skill -y
+npx skills add augmentableai/skills --skill tpsreport-knowledge-base-generation -y
 ```
 
 **Full resources hub:**
@@ -134,9 +112,8 @@ npx skills add augmentableai/tpsreport-skill -y
 
 ## Tracking
 
-When listed on skills.sh or agentskill.sh, add the profile URL here:
+When listed on skills.sh, add the profile URL here:
 
 | Directory | Listing URL |
 |-----------|-------------|
-| skills.sh | *(add after publish)* |
-| agentskill.sh | *(add after import)* |
+| skills.sh | *(add after telemetry accumulates)* |

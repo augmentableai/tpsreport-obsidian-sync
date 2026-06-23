@@ -1,6 +1,6 @@
 # TPSReport Skills & Resources
 
-[![skills.sh](https://skills.sh/b/augmentableai/tpsreport-skill)](https://skills.sh/augmentableai/tpsreport-skill)
+[![skills.sh](https://skills.sh/b/augmentableai/skills)](https://skills.sh/augmentableai/skills)
 
 **TPSReport by [Augmentable.ai](https://augmentable.ai)** — agent workflows for the [TPSReport Obsidian plugin](https://community.obsidian.md/plugins/tpsreport-sync).
 
@@ -9,7 +9,7 @@
 | **Product** | [tpsreport.pro](https://tpsreport.pro) |
 | **Obsidian plugin (official)** | [community.obsidian.md/plugins/tpsreport-sync](https://community.obsidian.md/plugins/tpsreport-sync) |
 | **Plugin source** | [github.com/augmentableai/tpsreport-obsidian-sync](https://github.com/augmentableai/tpsreport-obsidian-sync) |
-| **Canonical skill repo** | [github.com/augmentableai/tpsreport-skill](https://github.com/augmentableai/tpsreport-skill) |
+| **Canonical skills repo** | [github.com/augmentableai/skills](https://github.com/augmentableai/skills) |
 
 ---
 
@@ -21,20 +21,22 @@ Obsidian vault  →  Agent skill (author + lint)  →  TPSReport plugin (push)  
 
 | Layer | What it does | Where |
 |-------|--------------|-------|
-| **Obsidian plugin** | Publish, push/pull, Gatekeeper, image sync, conflict copies | Repo root · [Install from Obsidian](https://community.obsidian.md/plugins/tpsreport-sync) |
-| **TPSReport KB skill** | Seed → write → RAG metadata → lint → ship workflow for agents | [`../tpsreport-skill/`](../tpsreport-skill/) |
-| **`kb_lint.py`** | Validates frontmatter against the same contract as Gatekeeper | [`../tpsreport-skill/kb_lint.py`](../tpsreport-skill/kb_lint.py) |
-| **Examples** | Folder anatomy, frontmatter templates, `kb_schema` patterns | [`examples/`](examples/) |
+| **Obsidian plugin** | Publish, push/pull, Gatekeeper, image sync, conflict copies | Plugin repo · [Install from Obsidian](https://community.obsidian.md/plugins/tpsreport-sync) |
+| **TPSReport KB skill** | Seed → write → RAG metadata → lint → ship workflow for agents | [`augmentableai/skills`](https://github.com/augmentableai/skills/tree/main/skills/tpsreport-knowledge-base-generation) |
+| **`kb_lint.py`** | Validates frontmatter against the same contract as Gatekeeper | [references/kb_lint.py](https://github.com/augmentableai/skills/blob/main/skills/tpsreport-knowledge-base-generation/references/kb_lint.py) |
+| **Examples** | Folder anatomy, frontmatter templates, `kb_schema` patterns | [examples/](examples/) |
 
 ---
 
 ## Available skills
 
-| Skill | Install path | Best for |
-|-------|--------------|----------|
-| **[TPSReport Skill](../tpsreport-skill/)** | `tpsreport-skill/` (repo root) | Building retrieval-tuned Obsidian KBs for TPSReport Graph RAG |
+Skills live in the **[augmentableai/skills](https://github.com/augmentableai/skills)** repo under `skills/{name}/`:
 
-More skills will be added to this folder as we publish them. Each skill is a self-contained directory with `SKILL.md`, optional tooling, and examples.
+| Skill | Path | Best for |
+|-------|------|----------|
+| **TPSReport KB generation** | `skills/tpsreport-knowledge-base-generation/` | Building retrieval-tuned Obsidian KBs for TPSReport Graph RAG |
+
+More skills will be added to that repo as we publish them. Each skill is a self-contained directory with `SKILL.md`, optional tooling, and references.
 
 ---
 
@@ -48,24 +50,17 @@ More skills will be added to this folder as we publish them. Each skill is a sel
 
 ### TPSReport KB skill (Cursor / agents)
 
-**Option A — copy from this repo**
+**Recommended — npx / skills.sh**
 
 ```bash
-git clone https://github.com/augmentableai/tpsreport-obsidian-sync.git
-cp -r tpsreport-obsidian-sync/tpsreport-skill .cursor/skills/
+npx skills add augmentableai/skills --skill tpsreport-knowledge-base-generation -y
 pip install pyyaml
 ```
 
-**Option B — skills.sh / npx**
-
-```bash
-npx skills add augmentableai/tpsreport-obsidian-sync --skill tpsreport-skill -y
-```
-
-**Option C — direct URL (any agent that reads SKILL.md)**
+**Direct URL (any agent that reads SKILL.md)**
 
 ```
-https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/tpsreport-skill/SKILL.md
+https://github.com/augmentableai/skills/blob/main/skills/tpsreport-knowledge-base-generation/SKILL.md
 ```
 
 → Full platform-by-platform guide: **[INSTALL.md](INSTALL.md)**
@@ -75,7 +70,7 @@ https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/tpsreport-ski
 ## Validate a knowledge base
 
 ```bash
-python .cursor/tpsreport-skill/kb_lint.py path/to/Your_KB_Folder/
+python .cursor/skills/tpsreport-knowledge-base-generation/references/kb_lint.py path/to/Your_KB_Folder/
 ```
 
 Exit code **0** = frontmatter matches the TPSReport contract. The plugin **Gatekeeper** enforces the same rules at push time (no Python required in Obsidian).
@@ -89,11 +84,11 @@ Exit code **0** = frontmatter matches the TPSReport contract. The plugin **Gatek
 | **[INSTALL.md](INSTALL.md)** | Cursor, Claude Code, Codex, skills.sh, personal vs project skills |
 | **[WORKFLOW.md](WORKFLOW.md)** | End-to-end lifecycle: seed → lint → push → test retrieval |
 | **[examples/](examples/)** | Frontmatter samples, folder structure, `kb_schema` patterns |
-| **[DIRECTORIES.md](DIRECTORIES.md)** | Where to list the skill (skills.sh, agentskill.sh, GitHub topics) |
-| **[tpsreport-skill/SKILL.md](../tpsreport-skill/SKILL.md)** | Full agent instructions (metadata contract, phases, quality bar) |
-| **[tpsreport-skill/KB_AGENT_PROMPT.md](../tpsreport-skill/KB_AGENT_PROMPT.md)** | Copy-paste prompt for any agent |
+| **[DIRECTORIES.md](DIRECTORIES.md)** | Where to list the skill (skills.sh, GitHub topics) |
+| **[SKILL.md](https://github.com/augmentableai/skills/blob/main/skills/tpsreport-knowledge-base-generation/SKILL.md)** | Full agent instructions (metadata contract, phases, quality bar) |
+| **[KB_AGENT_PROMPT.md](https://github.com/augmentableai/skills/blob/main/skills/tpsreport-knowledge-base-generation/references/KB_AGENT_PROMPT.md)** | Copy-paste prompt for any agent |
 
-Plugin docs (repo root): [README](../README.md) · [About TPSReport](../docs/about-tpsreport.md) · [Use cases](../docs/use-cases.md) · [FAQ](../docs/faq.md)
+Plugin docs: [README](../README.md) · [About TPSReport](../docs/about-tpsreport.md) · [Use cases](../docs/use-cases.md) · [FAQ](../docs/faq.md)
 
 ---
 
@@ -110,7 +105,7 @@ Plugin docs (repo root): [README](../README.md) · [About TPSReport](../docs/abo
 
 1. **Sign up** at [tpsreport.pro](https://tpsreport.pro) and generate an `obs_…` API key
 2. **Install** the [Obsidian plugin](https://community.obsidian.md/plugins/tpsreport-sync)
-3. **Install** the [TPSReport KB skill](tpsreport-skill/) into `.cursor/skills/`
+3. **Install** the KB skill: `npx skills add augmentableai/skills --skill tpsreport-knowledge-base-generation -y`
 4. **Author** a KB folder in Obsidian (see [examples/folder-structure.md](examples/folder-structure.md))
 5. **Lint** with `kb_lint.py` until exit 0
 6. **Publish** the folder → **Push to TPS** → enable RAG in report settings
