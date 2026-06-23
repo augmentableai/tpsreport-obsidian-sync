@@ -2,15 +2,16 @@
 
 **Sync local research folders to [TPSReport](https://tpsreport.pro) — graph-native AI knowledge management built for teams, agents, and retrieval.**
 
-[![TPSReport](https://img.shields.io/badge/Product-tpsreport.pro-2563eb?style=for-the-badge)](https://tpsreport.pro)
+[![TPSReport](https://img.shields.io/badge/TPSReport-tpsreport.pro-2563eb?style=for-the-badge)](https://tpsreport.pro)
 [![Obsidian community plugin](https://img.shields.io/badge/Obsidian-Community%20Plugin-7c3aed?style=for-the-badge)](https://community.obsidian.md/plugins/tpsreport-sync)
+[![skills.sh skill](https://img.shields.io/badge/skills.sh-tpsreport--skill-111?style=for-the-badge)](https://skills.sh/augmentableai/tpsreport-skill)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.2.2-blue?style=for-the-badge)](https://github.com/augmentableai/tpsreport-obsidian-sync/releases)
 
-> **Official Obsidian companion for [TPSReport AI Brain & Knowledge Management](https://tpsreport.pro).**  
+> **TPSReport by [Augmentable.ai](https://augmentable.ai)** — official Obsidian companion for [TPSReport AI Brain & Knowledge Management](https://tpsreport.pro).  
 > Write in your vault. Publish structured knowledge reports. Sync Markdown, metadata, and images to a cloud workspace built for Graph RAG, access control, and agent-ready retrieval.
 
-**Publisher:** [Augmentable LLC](https://tpsreport.pro)  
+**Brand:** TPSReport by [Augmentable.ai](https://augmentable.ai)  
 **Home:** [tpsreport.pro](https://tpsreport.pro) · **Privacy:** [tpsreport.pro/privacy](https://tpsreport.pro/privacy) · **Terms:** [tpsreport.pro/terms](https://tpsreport.pro/terms)
 
 ---
@@ -124,7 +125,9 @@ Supported fields include `summary`, `keywords`, `tags`, `intents`, `scenarios`, 
 
 ## KB authoring skills & resources
 
-**Full skills hub:** [`skills/`](skills/) — install guides, workflow, examples, directory listings.
+[![skills.sh](https://skills.sh/b/augmentableai/tpsreport-skill)](https://skills.sh/augmentableai/tpsreport-skill)
+
+**TPSReport Skill** by Augmentable.ai — [`augmentableai/tpsreport-skill`](https://github.com/augmentableai/tpsreport-skill)
 
 | Resource | Link |
 | --- | --- |
@@ -169,7 +172,8 @@ Full policy: **[tpsreport.pro/privacy](https://tpsreport.pro/privacy)** · Terms
 | **Plugin releases** | [GitHub Releases](https://github.com/augmentableai/tpsreport-obsidian-sync/releases) |
 | **Obsidian listing (official)** | [community.obsidian.md/plugins/tpsreport-sync](https://community.obsidian.md/plugins/tpsreport-sync) |
 | **KB authoring skills** | [skills/](skills/) |
-| **skills.sh install** | `npx skills add augmentableai/tpsreport-obsidian-sync --skill tpsreport-skill -y` |
+| **TPSReport Skill (canonical)** | [github.com/augmentableai/tpsreport-skill](https://github.com/augmentableai/tpsreport-skill) |
+| **skills.sh install** | `npx skills add augmentableai/tpsreport-skill -y` |
 | **Privacy** | [tpsreport.pro/privacy](https://tpsreport.pro/privacy) |
 | **Terms** | [tpsreport.pro/terms](https://tpsreport.pro/terms) |
 | **Support** | [arvind@augmentable.ai](mailto:arvind@augmentable.ai) |
@@ -178,7 +182,7 @@ Full policy: **[tpsreport.pro/privacy](https://tpsreport.pro/privacy)** · Terms
 
 ## Keywords
 
-Obsidian plugin · knowledge management · research sync · Markdown sync · Graph RAG · AI knowledge base · institutional knowledge · note publishing · vault sync · TPSReport · [tpsreport.pro](https://tpsreport.pro) · Augmentable LLC
+Obsidian plugin · TPSReport by Augmentable.ai · knowledge management · Graph RAG · [tpsreport.pro](https://tpsreport.pro)
 
 ---
 

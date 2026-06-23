@@ -1,15 +1,15 @@
 # TPSReport Skills & Resources
 
-**Write in Obsidian. Enrich with agents. Sync to Graph RAG.**
+[![skills.sh](https://skills.sh/b/augmentableai/tpsreport-skill)](https://skills.sh/augmentableai/tpsreport-skill)
 
-This folder is the **skills and resources hub** for the [TPSReport Obsidian plugin](https://community.obsidian.md/plugins/tpsreport-sync). One repo ships the plugin, the agent workflows, examples, and install guides — so teams can go from vault notes to agent-ready knowledge bases without hunting across repos.
+**TPSReport by [Augmentable.ai](https://augmentable.ai)** — agent workflows for the [TPSReport Obsidian plugin](https://community.obsidian.md/plugins/tpsreport-sync).
 
 | | |
 |---|---|
 | **Product** | [tpsreport.pro](https://tpsreport.pro) |
 | **Obsidian plugin (official)** | [community.obsidian.md/plugins/tpsreport-sync](https://community.obsidian.md/plugins/tpsreport-sync) |
 | **Plugin source** | [github.com/augmentableai/tpsreport-obsidian-sync](https://github.com/augmentableai/tpsreport-obsidian-sync) |
-| **Skills directory** | [skills.sh](https://skills.sh) · [agentskill.sh](https://agentskill.sh) *(submit links below)* |
+| **Canonical skill repo** | [github.com/augmentableai/tpsreport-skill](https://github.com/augmentableai/tpsreport-skill) |
 
 ---
 
@@ -127,4 +127,4 @@ Plugin docs (repo root): [README](../README.md) · [About TPSReport](../docs/abo
 | Terms | [tpsreport.pro/terms](https://tpsreport.pro/terms) |
 | License | MIT — see [LICENSE](../LICENSE) |
 
-**Publisher:** Augmentable LLC
+**Publisher:** Augmentable.ai · **Brand:** TPSReport by Augmentable.ai

@@ -43,7 +43,7 @@ npx skills add augmentableai/tpsreport-skill -y
 **Badge** (add to README after installs accumulate):
 
 ```markdown
-[![skills.sh](https://skills.sh/b/augmentableai/tpsreport-obsidian-sync)](https://skills.sh/augmentableai/tpsreport-obsidian-sync)
+[![skills.sh](https://skills.sh/b/augmentableai/tpsreport-skill)](https://skills.sh/augmentableai/tpsreport-skill)
 ```
 
 For a **submit form with webhook sync**, use [agentskill.sh/submit](https://agentskill.sh/submit) instead.

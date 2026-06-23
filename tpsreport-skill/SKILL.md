@@ -8,13 +8,16 @@ description: >-
 license: MIT
 compatibility: Requires Python 3.9+ and PyYAML for kb_lint.py. Pairs with the TPSReport Obsidian community plugin and a TPSReport account.
 metadata:
-  author: augmentableai
+  author: Augmentable.ai
   version: "1.1.0"
   product: TPSReport
   plugin: tpsreport-sync
+  brand: TPSReport by Augmentable.ai
 ---
 
 # TPSReport KB Skill
+
+**TPSReport by [Augmentable.ai](https://augmentable.ai)** — workflow skill for Obsidian knowledge bases synced to [TPSReport](https://tpsreport.pro).
 
 The single workflow manager for a TPSReport knowledge base across its **whole
 lifecycle**: seeding new reports, generating content from guidance, enriching

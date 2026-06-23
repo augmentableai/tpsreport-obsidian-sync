@@ -95,4 +95,4 @@ Questions? **[arvind@augmentable.ai](mailto:arvind@augmentable.ai)**
 
 ---
 
-**TPSReport** · [tpsreport.pro](https://tpsreport.pro) · Published by **Augmentable LLC**
+**TPSReport** · [tpsreport.pro](https://tpsreport.pro) · **TPSReport by Augmentable.ai**
