@@ -47,7 +47,7 @@ https://github.com/augmentableai/tpsreport-obsidian-sync
 
 ## Part 2 — KB Lifecycle skill
 
-The skill lives at **`skills/kb-metadata-enrichment/`** in this repo.
+The skill lives at **`kb-metadata-enrichment/`** in this repo.
 
 ### Cursor — project skill (recommended)
 
@@ -57,7 +57,7 @@ Use when one vault/repo is your KB home:
 # from your vault or monorepo root
 mkdir -p .cursor/skills
 git clone https://github.com/augmentableai/tpsreport-obsidian-sync.git /tmp/tpsreport-obsidian-sync
-cp -r /tmp/tpsreport-obsidian-sync/skills/kb-metadata-enrichment .cursor/skills/
+cp -r /tmp/tpsreport-obsidian-sync/kb-metadata-enrichment .cursor/skills/
 pip install pyyaml
 ```
 
@@ -68,7 +68,7 @@ your-vault/
 ├── My_KB_Folder/
 │   ├── 00_CONTEXT.md
 │   └── 01_Overview/
-└── .cursor/skills/kb-metadata-enrichment/
+└── .cursor/kb-metadata-enrichment/
     ├── SKILL.md
     ├── metadata-contract.yaml
     ├── kb_lint.py
@@ -84,14 +84,14 @@ Same folder under:
 
 ```text
 Windows:  %USERPROFILE%\.cursor\skills\kb-metadata-enrichment\
-macOS:    ~/.cursor/skills/kb-metadata-enrichment/
-Linux:    ~/.cursor/skills/kb-metadata-enrichment/
+macOS:    ~/.cursor/kb-metadata-enrichment/
+Linux:    ~/.cursor/kb-metadata-enrichment/
 ```
 
 ### skills.sh / npx
 
 ```bash
-npx skills add augmentableai/tpsreport-obsidian-sync/skills/kb-metadata-enrichment
+npx skills add augmentableai/tpsreport-obsidian-sync --skill kb-metadata-enrichment -y
 ```
 
 Browse: [skills.sh](https://skills.sh) · Docs: [skills.sh/docs](https://skills.sh/docs)
@@ -99,7 +99,7 @@ Browse: [skills.sh](https://skills.sh) · Docs: [skills.sh/docs](https://skills.
 To publish updates after pushing to GitHub:
 
 ```bash
-cd skills/kb-metadata-enrichment
+cd kb-metadata-enrichment
 npx skills publish
 ```
 
@@ -116,7 +116,7 @@ Import the whole repo (finds all `SKILL.md` files):
 ```bash
 # project-level
 mkdir -p .claude/skills
-cp -r skills/kb-metadata-enrichment .claude/skills/kb-metadata-enrichment
+cp -r kb-metadata-enrichment .claude/kb-metadata-enrichment
 ```
 
 Or install via skills.sh if your Claude Code build supports `npx skills add`.
@@ -137,7 +137,7 @@ Point the agent at the raw SKILL.md URL or copy the folder into your project's s
 ### Linter
 
 ```bash
-python .cursor/skills/kb-metadata-enrichment/kb_lint.py path/to/Your_KB/
+python .cursor/kb-metadata-enrichment/kb_lint.py path/to/Your_KB/
 ```
 
 Fix errors until exit **0**. Warnings are optional unless you pass `--strict`.
@@ -155,7 +155,7 @@ Command palette → **TPSReport: Gatekeeper health check** on a mapped folder. S
 | `ModuleNotFoundError: yaml` | `pip install pyyaml` |
 | Gatekeeper fails but linter passes | Reload plugin; confirm `metadata-contract.yaml` matches plugin version |
 | Push 404 on settings | Update plugin to latest [release](https://github.com/augmentableai/tpsreport-obsidian-sync/releases) |
-| Skill not picked up in Cursor | Confirm path is `.cursor/skills/kb-metadata-enrichment/SKILL.md` and restart Cursor |
+| Skill not picked up in Cursor | Confirm path is `.cursor/kb-metadata-enrichment/SKILL.md` and restart Cursor |
 | `npx skills add` not found | Install Node.js; see [skills.sh/docs](https://skills.sh/docs) |
 
 ---

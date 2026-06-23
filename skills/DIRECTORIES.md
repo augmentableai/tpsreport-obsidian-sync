@@ -3,7 +3,19 @@
 Where to list **TPSReport Obsidian plugin** and **KB Metadata Enrichment** skill for discovery and SEO.
 
 **Repo:** https://github.com/augmentableai/tpsreport-obsidian-sync  
-**Skill path:** `skills/kb-metadata-enrichment/`  
+**Skill path:** `kb-metadata-enrichment/` (repo root)
+
+### agentskill.sh — submit options
+
+**Option A — repo root (recommended after this move):**
+```
+augmentableai/tpsreport-obsidian-sync
+```
+
+**Option B — direct deep link (Direct URL tab):**
+```
+https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/kb-metadata-enrichment/SKILL.md
+```
 **Official plugin listing:** https://community.obsidian.md/plugins/tpsreport-sync
 
 ---
@@ -21,7 +33,7 @@ skills.sh is a **leaderboard driven by install telemetry**:
 **Subfolder skills** (like ours) require `--full-depth`:
 
 ```bash
-npx skills add augmentableai/tpsreport-obsidian-sync --full-depth -y
+npx skills add augmentableai/tpsreport-obsidian-sync --skill kb-metadata-enrichment -y
 ```
 
 **To seed your own listing:** run the install command yourself (and share the command in README). That counts as the first install event.
@@ -49,11 +61,11 @@ For a **submit form with webhook sync**, use [agentskill.sh/submit](https://agen
 ### Install commands (skills.sh)
 
 ```bash
-# End users — skill lives in skills/kb-metadata-enrichment/
-npx skills add augmentableai/tpsreport-obsidian-sync --full-depth -y
+# End users — skill lives in kb-metadata-enrichment/
+npx skills add augmentableai/tpsreport-obsidian-sync --skill kb-metadata-enrichment -y
 
 # Maintainer — seed your own skills.sh telemetry (run once after pushing)
-npx skills add augmentableai/tpsreport-obsidian-sync --full-depth -y
+npx skills add augmentableai/tpsreport-obsidian-sync --skill kb-metadata-enrichment -y
 ```
 
 ### agentskill.sh webhook (instant sync)
@@ -107,7 +119,7 @@ These index public GitHub repos over time. Stars, installs, and README quality h
 **Skill install:**
 
 ```markdown
-npx skills add augmentableai/tpsreport-obsidian-sync/skills/kb-metadata-enrichment
+npx skills add augmentableai/tpsreport-obsidian-sync --skill kb-metadata-enrichment -y
 ```
 
 **Full resources hub:**

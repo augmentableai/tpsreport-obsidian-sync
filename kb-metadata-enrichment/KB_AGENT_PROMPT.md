@@ -2,7 +2,7 @@
 
 Copy-paste prompt for Cursor, Claude Code, Codex, or any agent that supports project skills.
 
-**Skill location (this repo):** [`skills/kb-metadata-enrichment/`](.)  
+**Skill location (this repo):** [`kb-metadata-enrichment/`](../)  
 **Examples:** [`../examples/`](../examples/) · **Workflow:** [`../WORKFLOW.md`](../WORKFLOW.md)  
 **Official plugin listing:** [community.obsidian.md/plugins/tpsreport-sync](https://community.obsidian.md/plugins/tpsreport-sync)
 
@@ -21,7 +21,7 @@ Output vault folder: **`[Your_Vault]/[Folder_Name]/`**
 
 ## Mandatory: read and follow the skill
 1. Read `.cursor/skills/kb-metadata-enrichment/SKILL.md` in full before writing anything.
-   (Install from https://github.com/augmentableai/tpsreport-obsidian-sync/tree/main/skills/kb-metadata-enrichment if missing.)
+   (Install from https://github.com/augmentableai/tpsreport-obsidian-sync/tree/main/kb-metadata-enrichment if missing.)
 2. Treat `metadata-contract.yaml` in the same folder as the single source of truth for frontmatter keys.
 3. Do NOT invent synonym keys (`questions` → use `hyde_questions`; `tldr` → use `summary`).
 

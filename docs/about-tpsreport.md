@@ -57,7 +57,7 @@ This plugin ([tpsreport-obsidian-sync](https://github.com/augmentableai/tpsrepor
 
 **Official plugin listing:** [community.obsidian.md/plugins/tpsreport-sync](https://community.obsidian.md/plugins/tpsreport-sync)
 
-**Agent skills:** [`skills/`](../skills/) — lifecycle workflow + `kb_lint.py` for retrieval-tuned frontmatter. Install: `npx skills add augmentableai/tpsreport-obsidian-sync/skills/kb-metadata-enrichment`
+**Agent skills:** [`skills/`](../skills/) — lifecycle workflow + `kb_lint.py` for retrieval-tuned frontmatter. Install: `npx skills add augmentableai/tpsreport-obsidian-sync --skill kb-metadata-enrichment -y`
 
 ---
 
@@ -89,7 +89,7 @@ See [use cases](use-cases.md) for detailed scenarios.
 1. Create an account at **[tpsreport.pro](https://tpsreport.pro)**  
 2. Install the plugin from the **[Obsidian community listing](https://community.obsidian.md/plugins/tpsreport-sync)**  
 3. Connect with your API key and publish your first report  
-4. *(Optional)* Copy **[skills/kb-metadata-enrichment](../skills/kb-metadata-enrichment/)** into `.cursor/skills/` for agent-assisted KB authoring
+4. *(Optional)* Copy **[kb-metadata-enrichment](../kb-metadata-enrichment/)** into `.cursor/skills/` for agent-assisted KB authoring
 
 Questions? **[arvind@augmentable.ai](mailto:arvind@augmentable.ai)**
 

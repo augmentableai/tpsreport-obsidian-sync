@@ -4,7 +4,7 @@
   "description": "Build, enrich, lint, and iterate Obsidian knowledge bases for TPSReport Graph RAG — pairs with the TPSReport Obsidian community plugin.",
   "author": "Augmentable LLC",
   "homepage": "https://community.obsidian.md/plugins/tpsreport-sync",
-  "repository": "https://github.com/augmentableai/tpsreport-obsidian-sync/tree/main/skills/kb-metadata-enrichment",
+  "repository": "https://github.com/augmentableai/tpsreport-obsidian-sync/tree/main/kb-metadata-enrichment",
   "tags": [
     "tpsreport",
     "obsidian",

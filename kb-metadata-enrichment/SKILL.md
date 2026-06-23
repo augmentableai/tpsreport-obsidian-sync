@@ -30,7 +30,7 @@ phase inside a closed build->push->measure->iterate loop.
 Reference vaults for examples: sample KBs in your Obsidian vault or TPSReport workspace (structure mirrors affiliate / industry KB patterns on [tpsreport.pro](https://tpsreport.pro)).
 
 Plugin source (authoritative key lists + sync behaviour):
-[`main.js`](../../main.js) in [tpsreport-obsidian-sync](https://github.com/augmentableai/tpsreport-obsidian-sync).
+[`main.js`](../main.js) in [tpsreport-obsidian-sync](https://github.com/augmentableai/tpsreport-obsidian-sync).
 
 Tooling shipped with this skill (use them — don't eyeball metadata):
 - `metadata-contract.yaml` — machine-readable contract: the exact keys, types,
@@ -57,7 +57,7 @@ never push KB content without the user's explicit go-ahead.
 ## The Metadata Contract (what TPSReport actually reads)
 
 The plugin extracts these frontmatter keys for retrieval (`RAG_FM_KEYS` in
-[`main.js`](../../main.js)). **Target exactly these names** — a
+[`main.js`](../main.js)). **Target exactly these names** — a
 synonym in the wrong key is ignored.
 
 | Key | Type | Purpose |

@@ -132,16 +132,16 @@ Supported fields include `summary`, `keywords`, `tags`, `intents`, `scenarios`, 
 | **Install guide** | [skills/INSTALL.md](skills/INSTALL.md) |
 | **Workflow** | [skills/WORKFLOW.md](skills/WORKFLOW.md) |
 | **Examples** | [skills/examples/](skills/examples/) |
-| **KB Lifecycle skill** | [skills/kb-metadata-enrichment/](skills/kb-metadata-enrichment/) |
-| **Agent prompt template** | [skills/kb-metadata-enrichment/KB_AGENT_PROMPT.md](skills/kb-metadata-enrichment/KB_AGENT_PROMPT.md) |
+| **KB Lifecycle skill** | [kb-metadata-enrichment/](kb-metadata-enrichment/) |
+| **Agent prompt template** | [kb-metadata-enrichment/KB_AGENT_PROMPT.md](kb-metadata-enrichment/KB_AGENT_PROMPT.md) |
 | **List on skills.sh** | [skills/DIRECTORIES.md](skills/DIRECTORIES.md) |
 
 ```bash
 # Install skill (Cursor)
-cp -r skills/kb-metadata-enrichment .cursor/skills/
+cp -r kb-metadata-enrichment .cursor/skills/
 
 # Or via skills.sh
-npx skills add augmentableai/tpsreport-obsidian-sync/skills/kb-metadata-enrichment
+npx skills add augmentableai/tpsreport-obsidian-sync --skill kb-metadata-enrichment -y
 ```
 
 The skill covers seed → write → RAG metadata → lint → push. The linter shares the same frontmatter contract as the plugin **Gatekeeper**.
@@ -169,7 +169,7 @@ Full policy: **[tpsreport.pro/privacy](https://tpsreport.pro/privacy)** · Terms
 | **Plugin releases** | [GitHub Releases](https://github.com/augmentableai/tpsreport-obsidian-sync/releases) |
 | **Obsidian listing (official)** | [community.obsidian.md/plugins/tpsreport-sync](https://community.obsidian.md/plugins/tpsreport-sync) |
 | **KB authoring skills** | [skills/](skills/) |
-| **skills.sh install** | `npx skills add augmentableai/tpsreport-obsidian-sync/skills/kb-metadata-enrichment` |
+| **skills.sh install** | `npx skills add augmentableai/tpsreport-obsidian-sync --skill kb-metadata-enrichment -y` |
 | **Privacy** | [tpsreport.pro/privacy](https://tpsreport.pro/privacy) |
 | **Terms** | [tpsreport.pro/terms](https://tpsreport.pro/terms) |
 | **Support** | [arvind@augmentable.ai](mailto:arvind@augmentable.ai) |

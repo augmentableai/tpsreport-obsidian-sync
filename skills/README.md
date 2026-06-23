@@ -22,8 +22,8 @@ Obsidian vault  →  Agent skill (author + lint)  →  TPSReport plugin (push)  
 | Layer | What it does | Where |
 |-------|--------------|-------|
 | **Obsidian plugin** | Publish, push/pull, Gatekeeper, image sync, conflict copies | Repo root · [Install from Obsidian](https://community.obsidian.md/plugins/tpsreport-sync) |
-| **KB Lifecycle skill** | Seed → write → RAG metadata → lint → ship workflow for agents | [`kb-metadata-enrichment/`](kb-metadata-enrichment/) |
-| **`kb_lint.py`** | Validates frontmatter against the same contract as Gatekeeper | [`kb-metadata-enrichment/kb_lint.py`](kb-metadata-enrichment/kb_lint.py) |
+| **KB Lifecycle skill** | Seed → write → RAG metadata → lint → ship workflow for agents | [`../kb-metadata-enrichment/`](../kb-metadata-enrichment/) |
+| **`kb_lint.py`** | Validates frontmatter against the same contract as Gatekeeper | [`../kb-metadata-enrichment/kb_lint.py`](../kb-metadata-enrichment/kb_lint.py) |
 | **Examples** | Folder anatomy, frontmatter templates, `kb_schema` patterns | [`examples/`](examples/) |
 
 ---
@@ -32,7 +32,7 @@ Obsidian vault  →  Agent skill (author + lint)  →  TPSReport plugin (push)  
 
 | Skill | Install path | Best for |
 |-------|--------------|----------|
-| **[KB Metadata Enrichment](kb-metadata-enrichment/)** | `skills/kb-metadata-enrichment/` | Building retrieval-tuned Obsidian KBs for TPSReport Graph RAG |
+| **[KB Metadata Enrichment](../kb-metadata-enrichment/)** | `kb-metadata-enrichment/` (repo root) | Building retrieval-tuned Obsidian KBs for TPSReport Graph RAG |
 
 More skills will be added to this folder as we publish them. Each skill is a self-contained directory with `SKILL.md`, optional tooling, and examples.
 
@@ -52,20 +52,20 @@ More skills will be added to this folder as we publish them. Each skill is a sel
 
 ```bash
 git clone https://github.com/augmentableai/tpsreport-obsidian-sync.git
-cp -r tpsreport-obsidian-sync/skills/kb-metadata-enrichment .cursor/skills/
+cp -r tpsreport-obsidian-sync/kb-metadata-enrichment .cursor/skills/
 pip install pyyaml
 ```
 
 **Option B — skills.sh / npx**
 
 ```bash
-npx skills add augmentableai/tpsreport-obsidian-sync/skills/kb-metadata-enrichment
+npx skills add augmentableai/tpsreport-obsidian-sync --skill kb-metadata-enrichment -y
 ```
 
 **Option C — direct URL (any agent that reads SKILL.md)**
 
 ```
-https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/skills/kb-metadata-enrichment/SKILL.md
+https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/kb-metadata-enrichment/SKILL.md
 ```
 
 → Full platform-by-platform guide: **[INSTALL.md](INSTALL.md)**
@@ -75,7 +75,7 @@ https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/skills/kb-met
 ## Validate a knowledge base
 
 ```bash
-python .cursor/skills/kb-metadata-enrichment/kb_lint.py path/to/Your_KB_Folder/
+python .cursor/kb-metadata-enrichment/kb_lint.py path/to/Your_KB_Folder/
 ```
 
 Exit code **0** = frontmatter matches the TPSReport contract. The plugin **Gatekeeper** enforces the same rules at push time (no Python required in Obsidian).
@@ -90,8 +90,8 @@ Exit code **0** = frontmatter matches the TPSReport contract. The plugin **Gatek
 | **[WORKFLOW.md](WORKFLOW.md)** | End-to-end lifecycle: seed → lint → push → test retrieval |
 | **[examples/](examples/)** | Frontmatter samples, folder structure, `kb_schema` patterns |
 | **[DIRECTORIES.md](DIRECTORIES.md)** | Where to list the skill (skills.sh, agentskill.sh, GitHub topics) |
-| **[kb-metadata-enrichment/SKILL.md](kb-metadata-enrichment/SKILL.md)** | Full agent instructions (metadata contract, phases, quality bar) |
-| **[kb-metadata-enrichment/KB_AGENT_PROMPT.md](kb-metadata-enrichment/KB_AGENT_PROMPT.md)** | Copy-paste prompt for any agent |
+| **[kb-metadata-enrichment/SKILL.md](../kb-metadata-enrichment/SKILL.md)** | Full agent instructions (metadata contract, phases, quality bar) |
+| **[kb-metadata-enrichment/KB_AGENT_PROMPT.md](../kb-metadata-enrichment/KB_AGENT_PROMPT.md)** | Copy-paste prompt for any agent |
 
 Plugin docs (repo root): [README](../README.md) · [About TPSReport](../docs/about-tpsreport.md) · [Use cases](../docs/use-cases.md) · [FAQ](../docs/faq.md)
 
