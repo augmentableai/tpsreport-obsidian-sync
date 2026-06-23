@@ -2,12 +2,26 @@
 
 **Repo:** https://github.com/augmentableai/tpsreport-obsidian-sync  
 **Plugin ID:** `tpsreport-sync`  
-**Version:** `1.2.2` (must match GitHub release tag exactly — no `v` prefix)
+**Version:** `1.2.2` (must match GitHub release tag exactly — no `v` prefix)  
+**Official Obsidian listing (live):** https://community.obsidian.md/plugins/tpsreport-sync
 
 ## What changed in 1.2.2
 
 - Synced `main.js` with latest monorepo build: **Gatekeeper** health check, push-time metadata validation, report **settings** API client (`GET/PATCH /settings`, reindex), improved push modal flow
 - No manifest ID or minAppVersion change
+
+## Skills bundle (same repo)
+
+Agent workflows live under **`skills/`**:
+
+| Path | Purpose |
+|------|---------|
+| `skills/README.md` | Skills index |
+| `skills/kb-metadata-enrichment/` | KB lifecycle skill + `kb_lint.py` + `metadata-contract.yaml` |
+
+Install: `cp -r skills/kb-metadata-enrichment .cursor/skills/` or `npx skills add augmentableai/tpsreport-obsidian-sync/skills/kb-metadata-enrichment`
+
+Submit for indexing: [agentskill.sh/submit](https://agentskill.sh/submit), [skills.sh](https://skills.sh/docs)
 
 ## Required repo root files
 
@@ -22,33 +36,12 @@
 
 ## Before you resubmit to Obsidian
 
-1. **Push** this commit to `origin/main`
-2. **Create GitHub release** tag `1.2.2` with binary assets attached:
-   - `main.js`
-   - `manifest.json`
-   - `styles.css`
-3. **Obsidian PR** (if first-time or entry rejected): fork [obsidian-releases](https://github.com/obsidianmd/obsidian-releases), add to `community-plugins.json`:
+**Status:** Plugin is **approved and live** at https://community.obsidian.md/plugins/tpsreport-sync
 
-```json
-{
-  "id": "tpsreport-sync",
-  "name": "TPSReport",
-  "author": "Augmentable LLC",
-  "description": "Sync notes, research folders, and images with TPSReport AI Brain & Knowledge Management. Requires a TPSReport account.",
-  "repo": "augmentableai/tpsreport-obsidian-sync"
-}
-```
+Optional follow-ups:
 
-4. PR checklist (paste in description):
-
-```markdown
-- [x] I have read the submission guidelines
-- [x] My repo contains README.md, LICENSE, manifest.json, main.js
-- [x] I have created a release tagged 1.2.2 with the required assets
-- [x] My plugin ID is unique and does not contain "obsidian"
-```
-
-5. **Verify live:** https://tpsreport.pro/privacy and https://tpsreport.pro/terms load publicly
+1. **Update listing blurb** — community page may still show stale "HiFi-WP" text; open a PR to [obsidian-releases](https://github.com/obsidianmd/obsidian-releases) `community-plugins.json` if description needs refresh
+2. **New plugin version** — bump `manifest.json` → push → GitHub release tag matching version (no new directory PR for routine updates)
 
 ## Optional: BRAT beta install
 

@@ -82,4 +82,6 @@ Start in a private Obsidian vault folder; publish to team or org destinations wh
 
 **[Create your TPSReport account →](https://tpsreport.pro)**
 
-Install the plugin from [Obsidian Community Plugins](https://community.obsidian.md/plugins?tpsreport-sync) or [GitHub Releases](https://github.com/augmentableai/tpsreport-obsidian-sync/releases/latest).
+Install the plugin from the [Obsidian community listing](https://community.obsidian.md/plugins/tpsreport-sync) or [GitHub Releases](https://github.com/augmentableai/tpsreport-obsidian-sync/releases/latest).
+
+For agent-assisted KB builds, see **[skills/kb-metadata-enrichment/](../skills/kb-metadata-enrichment/)**.

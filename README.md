@@ -3,7 +3,7 @@
 **Sync local research folders to [TPSReport](https://tpsreport.pro) — graph-native AI knowledge management built for teams, agents, and retrieval.**
 
 [![TPSReport](https://img.shields.io/badge/Product-tpsreport.pro-2563eb?style=for-the-badge)](https://tpsreport.pro)
-[![Obsidian community plugin](https://img.shields.io/badge/Obsidian-Community%20Plugin-7c3aed?style=for-the-badge)](https://community.obsidian.md/plugins?tpsreport-sync)
+[![Obsidian community plugin](https://img.shields.io/badge/Obsidian-Community%20Plugin-7c3aed?style=for-the-badge)](https://community.obsidian.md/plugins/tpsreport-sync)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.2.2-blue?style=for-the-badge)](https://github.com/augmentableai/tpsreport-obsidian-sync/releases)
 
@@ -52,6 +52,8 @@ Most tools treat knowledge as isolated documents. TPSReport helps you **curate, 
 1. Open **Settings → Community plugins → Browse**
 2. Search for **TPSReport**
 3. Install and enable
+
+**Official listing:** [community.obsidian.md/plugins/tpsreport-sync](https://community.obsidian.md/plugins/tpsreport-sync)
 
 ### Manual / beta install
 
@@ -118,6 +120,34 @@ Supported fields include `summary`, `keywords`, `tags`, `intents`, `scenarios`, 
 
 ---
 
+## KB authoring skills (Cursor / agents)
+
+This repo includes **agent skills** for building retrieval-tuned knowledge bases that sync cleanly with TPSReport:
+
+| Resource | Location |
+| --- | --- |
+| **Skills index** | [`skills/README.md`](skills/README.md) |
+| **KB Lifecycle skill** | [`skills/kb-metadata-enrichment/`](skills/kb-metadata-enrichment/) |
+| **Frontmatter linter** | `skills/kb-metadata-enrichment/kb_lint.py` |
+| **Copy-paste agent prompt** | [`skills/kb-metadata-enrichment/KB_AGENT_PROMPT.md`](skills/kb-metadata-enrichment/KB_AGENT_PROMPT.md) |
+
+Install into a Cursor project:
+
+```bash
+cp -r skills/kb-metadata-enrichment .cursor/skills/
+python .cursor/skills/kb-metadata-enrichment/kb_lint.py path/to/Your_KB/
+```
+
+Or via [skills.sh](https://skills.sh):
+
+```bash
+npx skills add augmentableai/tpsreport-obsidian-sync/skills/kb-metadata-enrichment
+```
+
+The skill covers seed → write → RAG metadata → lint → push workflow. The linter shares the same frontmatter contract as the plugin **Gatekeeper**.
+
+---
+
 ## Privacy & data handling
 
 - **No vault content is sent** until you configure an API key and explicitly publish, push, or pull.
@@ -137,7 +167,8 @@ Full policy: **[tpsreport.pro/privacy](https://tpsreport.pro/privacy)** · Terms
 | **Use cases** | [docs/use-cases.md](docs/use-cases.md) |
 | **FAQ** | [docs/faq.md](docs/faq.md) |
 | **Plugin releases** | [GitHub Releases](https://github.com/augmentableai/tpsreport-obsidian-sync/releases) |
-| **Obsidian listing** | [community.obsidian.md](https://community.obsidian.md/plugins?tpsreport-sync) |
+| **Obsidian listing (official)** | [community.obsidian.md/plugins/tpsreport-sync](https://community.obsidian.md/plugins/tpsreport-sync) |
+| **KB authoring skills** | [skills/kb-metadata-enrichment/](skills/kb-metadata-enrichment/) |
 | **Privacy** | [tpsreport.pro/privacy](https://tpsreport.pro/privacy) |
 | **Terms** | [tpsreport.pro/terms](https://tpsreport.pro/terms) |
 | **Support** | [arvind@augmentable.ai](mailto:arvind@augmentable.ai) |
@@ -154,4 +185,4 @@ Obsidian plugin · knowledge management · research sync · Markdown sync · Gra
 
 MIT — see [LICENSE](LICENSE).
 
-**Current version:** `1.2.1` · Updates ship via [GitHub releases](https://github.com/augmentableai/tpsreport-obsidian-sync/releases) tagged to match `manifest.json`.
+**Current version:** `1.2.2` · Updates ship via [GitHub releases](https://github.com/augmentableai/tpsreport-obsidian-sync/releases) tagged to match `manifest.json`.

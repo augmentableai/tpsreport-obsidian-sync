@@ -71,11 +71,21 @@ Delete sync is a separate, explicit operation for mapped folders. Review mapping
 
 ---
 
+## KB authoring skills
+
+### Is there a Cursor / agent workflow for building KBs?
+
+Yes. This repo ships **[skills/kb-metadata-enrichment](../skills/kb-metadata-enrichment/)** — a lifecycle skill plus `kb_lint.py` that validates frontmatter against the same contract the plugin Gatekeeper uses.
+
+Copy to `.cursor/skills/kb-metadata-enrichment/` in your vault project, or install via [skills.sh](https://skills.sh).
+
+---
+
 ## Obsidian Community directory
 
 ### How do I install from Obsidian?
 
-Settings → Community plugins → Browse → search **TPSReport**.
+Settings → Community plugins → Browse → search **TPSReport**, or open the [official listing](https://community.obsidian.md/plugins/tpsreport-sync).
 
 ### How are updates delivered?
 
@@ -89,5 +99,6 @@ New versions are published as [GitHub releases](https://github.com/augmentableai
 | --- | --- |
 | Product home | [tpsreport.pro](https://tpsreport.pro) |
 | Plugin repo | [github.com/augmentableai/tpsreport-obsidian-sync](https://github.com/augmentableai/tpsreport-obsidian-sync) |
-| Community listing | [community.obsidian.md/plugins?tpsreport-sync](https://community.obsidian.md/plugins?tpsreport-sync) |
+| Community listing | [community.obsidian.md/plugins/tpsreport-sync](https://community.obsidian.md/plugins/tpsreport-sync) |
+| KB authoring skills | [skills/kb-metadata-enrichment](../skills/kb-metadata-enrichment/) |
 | Email | [arvind@augmentable.ai](mailto:arvind@augmentable.ai) |

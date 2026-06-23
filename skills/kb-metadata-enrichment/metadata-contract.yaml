@@ -1,0 +1,216 @@
+# KB Metadata Contract — single source of truth for frontmatter validation.
+#
+# Consumed by:
+#   - kb_lint.py (this skill) — the in-loop linter the agent MUST run before
+#     declaring a KB task done.
+#   - backend/Obsidian/tpsreport-sync/main.js (the plugin Gatekeeper) — mirrors
+#     the same rules at the human/sync boundary. Keep the two in sync; this file
+#     is authoritative for *what valid means*.
+#
+# The key lists below are copied from main.js (RAG_FM_KEYS / GUIDANCE_FM_KEYS and
+# the plugin-managed field list). If those change in the plugin, change them here.
+#
+# TWO LAYERS:
+#   1. PLATFORM CORE (this file)  — the exact keys TPSReport retrieval reads.
+#      Fixed and identical for every KB. You do NOT add subject-matter fields here.
+#   2. PER-KB EXTENSION (kb_schema) — each KB declares its own custom fields in
+#      its 00_CONTEXT.md frontmatter. They travel with the KB through sync; the
+#      linter and the plugin load them automatically. See "EXTENSIBILITY" below.
+version: 1
+
+# ---------------------------------------------------------------------------
+# Key vocabulary (exact names TPSReport reads — a synonym in the wrong key is
+# silently ignored by retrieval).
+# ---------------------------------------------------------------------------
+rag_keys:
+  - summary
+  - keywords
+  - intents
+  - hyde_questions
+  - retrieval_hint
+  - scenarios
+  - canonical_for
+  - defers_to
+  - lifecycle_position
+  - prerequisites
+  - unlocks
+  - see_also
+  - entities
+  - topics
+  - brands
+  - product_skus
+  - product_categories
+  - region
+  - audience
+  - metadata_canary
+
+guidance_keys:
+  - research_brief
+  - research_notes
+  - source_materials
+  - content_structure
+  - llm_instructions
+  - model_preferences
+
+classifier_keys:
+  - index_type
+  - guidance_type
+
+# Author-owned structural keys (allowed, not retrieval-scored).
+author_keys:
+  - title
+  - description
+  - date
+  - topic
+  - tags
+
+# Plugin-managed bookkeeping. NEVER hand-edit. The linter only flags these when
+# they are malformed; it never requires or rewrites them.
+plugin_managed_keys:
+  - node_id
+  - sync_status
+  - tps_sync_status
+  - last_synced
+  - tps_content_hash
+  - tps_meta_hash
+  - tps_conflict_reason
+  - tps_remote_conflict_path
+  - tps_remote_conflict_hash
+
+# Core set every *content* doc must carry (index/guidance/template docs exempt).
+required_core:
+  - summary
+  - keywords
+  - hyde_questions
+  - retrieval_hint
+  - intents
+  - scenarios
+
+# Keys whose values must resolve to real file slugs that exist in the KB.
+#   defers_to:  map of  aspect -> slug
+#   see_also:   list of  {file: slug, reason: ...}
+#   unlocks / prerequisites: list of slugs
+xref_keys:
+  - see_also
+  - defers_to
+  - unlocks
+  - prerequisites
+
+# Common wrong-key mistakes -> the correct key. Flagged as UNKNOWN_KEY w/ a hint.
+synonyms:
+  questions: hyde_questions
+  question: hyde_questions
+  hyde: hyde_questions
+  tldr: summary
+  abstract: summary
+  overview: summary
+  intent: intents
+  keyword: keywords
+  hint: retrieval_hint
+  router_hint: retrieval_hint
+  scenario: scenarios
+  persona: scenarios
+  entity: entities
+  brand: brands
+  topic_list: topics
+
+# Per-key value rules enforced on content docs.
+rules:
+  summary:
+    type: str
+    min_chars: 60
+  keywords:
+    type: list
+    min: 8
+    max: 20
+  hyde_questions:
+    type: list
+    min: 4
+    max: 8
+  intents:
+    type: list
+    min: 1
+  scenarios:
+    type: list
+    min: 1
+  retrieval_hint:
+    type: str
+    min_chars: 30
+    # retrieval_hint must contain a negative clause to stop over-retrieval.
+    must_contain_any:
+      - "do not use"
+      - "don't use"
+      - "dont use"
+      - "not for"
+      - "avoid using"
+      - "not use for"
+  lifecycle_position:
+    type: int
+  defers_to:
+    type: map
+  canonical_for:
+    type: str_or_list
+
+# ---------------------------------------------------------------------------
+# EXTENSIBILITY — per-KB custom fields (any subject matter)
+# ---------------------------------------------------------------------------
+# The keys above are the PLATFORM CORE: what TPSReport retrieval reads, fixed for
+# every KB. A KB may ALSO want its own fields (a movies KB wants `year_of_release`
+# on every film; a SaaS KB wants `pricing_tier`). Declare them in the KB's
+# 00_CONTEXT.md frontmatter under `kb_schema:` — do NOT add them to this file:
+#
+#   # movies KB → 00_CONTEXT.md frontmatter
+#   kb_schema:
+#     year_of_release: { type: int,  required: true }
+#     director:        { type: str,  required: true }
+#     genre:           { type: list, required: false }
+#     runtime_minutes: { type: int,  required: false }
+#
+# Effect (linter + plugin Gatekeeper both honour it):
+#   - declared keys are KNOWN → no UNKNOWN_KEY warning
+#   - each declared key is type-checked → WRONG_TYPE
+#   - `required: true` keys are enforced on every content doc → CUSTOM_REQUIRED_MISSING
+# The schema lives WITH the KB, so clients control their own fields by editing
+# 00_CONTEXT — no central registry, no plugin rebuild, no code change.
+custom_field_types: [str, int, float, bool, list, map, str_or_list]
+
+# Files exempt from content-quality checks (still get structural checks).
+# Matched case-insensitively against filename or any path segment.
+exempt_quality:
+  name_contains:
+    - template
+    - readme
+  name_startswith:
+    - "00_"            # 00_CONTEXT, 00_index, 00_guidance
+  path_segment:
+    - template
+  # guidance-only / index docs declared via classifier keys
+  classifier_index_type:
+    - section
+    - guidance
+  classifier_guidance_type_any: true   # any guidance_type => guidance-only doc
+
+# Severity tiers (used for exit codes; --strict promotes warnings to failures).
+# Note: UNKNOWN_KEY is ERROR when the key is a known synonym mistake (e.g.
+# `questions` -> `hyde_questions`) or a dedented see_also sub-field (`reason`/
+# `file`); otherwise it is a WARNING (harmless custom/author key, possibly a typo).
+severity:
+  error:
+    - DOUBLE_FRONTMATTER
+    - YAML_PARSE_ERROR
+    - BROKEN_XREF
+    - DUP_CANONICAL
+    - WRONG_TYPE
+    - CUSTOM_REQUIRED_MISSING
+  warning:
+    - BOM_PRESENT
+    - UNKNOWN_KEY
+    - MISSING_CORE_KEY
+    - LIST_LEN
+    - SUMMARY_TOO_SHORT
+    - NO_NEGATIVE_CLAUSE
+    - CANARY_MISMATCH
+    - EMPTY_VALUE
+  info:
+    - GUIDANCE_ONLY
+    - EXEMPT_QUALITY
