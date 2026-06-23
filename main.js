@@ -286,7 +286,7 @@ function mergeFrontmatterBlocks(blocks) {
   return merged;
 }
 
-// Contract mirrors (kept in sync with .cursor/skills/kb-metadata-enrichment/
+// Contract mirrors (kept in sync with .cursor/skills/tpsreport-skill/
 // metadata-contract.yaml). Used by the Gatekeeper health check.
 const KB_REQUIRED_CORE_KEYS = [
   "summary",

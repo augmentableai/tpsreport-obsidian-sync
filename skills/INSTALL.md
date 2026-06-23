@@ -1,6 +1,6 @@
 # Install guide — plugin + skills
 
-Step-by-step setup for **TPSReport Obsidian sync** and the **KB Metadata Enrichment** agent skill.
+Step-by-step setup for **TPSReport Obsidian sync** and the **TPSReport Skill** agent skill.
 
 ---
 
@@ -45,9 +45,9 @@ https://github.com/augmentableai/tpsreport-obsidian-sync
 
 ---
 
-## Part 2 — KB Lifecycle skill
+## Part 2 — TPSReport KB skill
 
-The skill lives at **`kb-metadata-enrichment/`** in this repo.
+The skill lives at **`tpsreport-skill/`** in this repo.
 
 ### Cursor — project skill (recommended)
 
@@ -57,7 +57,7 @@ Use when one vault/repo is your KB home:
 # from your vault or monorepo root
 mkdir -p .cursor/skills
 git clone https://github.com/augmentableai/tpsreport-obsidian-sync.git /tmp/tpsreport-obsidian-sync
-cp -r /tmp/tpsreport-obsidian-sync/kb-metadata-enrichment .cursor/skills/
+cp -r /tmp/tpsreport-obsidian-sync/tpsreport-skill .cursor/skills/
 pip install pyyaml
 ```
 
@@ -68,7 +68,7 @@ your-vault/
 ├── My_KB_Folder/
 │   ├── 00_CONTEXT.md
 │   └── 01_Overview/
-└── .cursor/kb-metadata-enrichment/
+└── .cursor/tpsreport-skill/
     ├── SKILL.md
     ├── metadata-contract.yaml
     ├── kb_lint.py
@@ -83,15 +83,15 @@ Cursor auto-discovers `.cursor/skills/*/SKILL.md`.
 Same folder under:
 
 ```text
-Windows:  %USERPROFILE%\.cursor\skills\kb-metadata-enrichment\
-macOS:    ~/.cursor/kb-metadata-enrichment/
-Linux:    ~/.cursor/kb-metadata-enrichment/
+Windows:  %USERPROFILE%\.cursor\skills\tpsreport-skill\
+macOS:    ~/.cursor/tpsreport-skill/
+Linux:    ~/.cursor/tpsreport-skill/
 ```
 
 ### skills.sh / npx
 
 ```bash
-npx skills add augmentableai/tpsreport-obsidian-sync --skill kb-metadata-enrichment -y
+npx skills add augmentableai/tpsreport-obsidian-sync --skill tpsreport-skill -y
 ```
 
 Browse: [skills.sh](https://skills.sh) · Docs: [skills.sh/docs](https://skills.sh/docs)
@@ -99,7 +99,7 @@ Browse: [skills.sh](https://skills.sh) · Docs: [skills.sh/docs](https://skills.
 To publish updates after pushing to GitHub:
 
 ```bash
-cd kb-metadata-enrichment
+cd tpsreport-skill
 npx skills publish
 ```
 
@@ -116,14 +116,14 @@ Import the whole repo (finds all `SKILL.md` files):
 ```bash
 # project-level
 mkdir -p .claude/skills
-cp -r kb-metadata-enrichment .claude/kb-metadata-enrichment
+cp -r tpsreport-skill .claude/tpsreport-skill
 ```
 
 Or install via skills.sh if your Claude Code build supports `npx skills add`.
 
 ### Codex / other agents
 
-Point the agent at the raw SKILL.md URL or copy the folder into your project's skills directory. Use **[KB_AGENT_PROMPT.md](kb-metadata-enrichment/KB_AGENT_PROMPT.md)** as a starter prompt.
+Point the agent at the raw SKILL.md URL or copy the folder into your project's skills directory. Use **[KB_AGENT_PROMPT.md](tpsreport-skill/KB_AGENT_PROMPT.md)** as a starter prompt.
 
 ---
 
@@ -137,7 +137,7 @@ Point the agent at the raw SKILL.md URL or copy the folder into your project's s
 ### Linter
 
 ```bash
-python .cursor/kb-metadata-enrichment/kb_lint.py path/to/Your_KB/
+python .cursor/tpsreport-skill/kb_lint.py path/to/Your_KB/
 ```
 
 Fix errors until exit **0**. Warnings are optional unless you pass `--strict`.
@@ -155,7 +155,7 @@ Command palette → **TPSReport: Gatekeeper health check** on a mapped folder. S
 | `ModuleNotFoundError: yaml` | `pip install pyyaml` |
 | Gatekeeper fails but linter passes | Reload plugin; confirm `metadata-contract.yaml` matches plugin version |
 | Push 404 on settings | Update plugin to latest [release](https://github.com/augmentableai/tpsreport-obsidian-sync/releases) |
-| Skill not picked up in Cursor | Confirm path is `.cursor/kb-metadata-enrichment/SKILL.md` and restart Cursor |
+| Skill not picked up in Cursor | Confirm path is `.cursor/tpsreport-skill/SKILL.md` and restart Cursor |
 | `npx skills add` not found | Install Node.js; see [skills.sh/docs](https://skills.sh/docs) |
 
 ---
@@ -164,4 +164,4 @@ Command palette → **TPSReport: Gatekeeper health check** on a mapped folder. S
 
 - Read **[WORKFLOW.md](WORKFLOW.md)** for the full KB lifecycle
 - Copy examples from **[examples/](examples/)**
-- Use **[KB_AGENT_PROMPT.md](kb-metadata-enrichment/KB_AGENT_PROMPT.md)** to kick off agent authoring
+- Use **[KB_AGENT_PROMPT.md](tpsreport-skill/KB_AGENT_PROMPT.md)** to kick off agent authoring

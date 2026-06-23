@@ -1,0 +1,20 @@
+{
+  "name": "tpsreport-skill",
+  "version": "1.1.0",
+  "description": "TPSReport knowledge base skill for Obsidian — build, enrich, lint, and sync Graph RAG-ready KB folders. Pairs with the TPSReport Obsidian community plugin.",
+  "author": "Augmentable LLC",
+  "homepage": "https://community.obsidian.md/plugins/tpsreport-sync",
+  "repository": "https://github.com/augmentableai/tpsreport-skill",
+  "tags": [
+    "tpsreport",
+    "tpsreport-skill",
+    "obsidian",
+    "knowledge-base",
+    "rag",
+    "graph-rag",
+    "frontmatter",
+    "cursor",
+    "agent-skill"
+  ],
+  "platforms": ["cursor", "claude-code", "codex"]
+}

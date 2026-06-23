@@ -12,7 +12,7 @@ Copy-paste starting points for TPSReport-ready Obsidian knowledge bases.
 Validate any folder you build:
 
 ```bash
-python .cursor/skills/kb-metadata-enrichment/kb_lint.py path/to/Your_KB/
+python .cursor/skills/tpsreport-skill/kb_lint.py path/to/Your_KB/
 ```
 
 Skill docs: [../README.md](../README.md) · [../WORKFLOW.md](../WORKFLOW.md)

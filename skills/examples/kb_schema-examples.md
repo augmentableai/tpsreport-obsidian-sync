@@ -106,4 +106,4 @@ Example values: `doc_type: timeline`, `doc_type: overview`, `event_year: 2026`.
 4. `required: true` → linter error if missing on any content doc
 5. Schema travels with the KB through sync — no central registry update needed
 
-Full contract: [../kb-metadata-enrichment/metadata-contract.yaml](../kb-metadata-enrichment/metadata-contract.yaml)
+Full contract: [../tpsreport-skill/metadata-contract.yaml](../tpsreport-skill/metadata-contract.yaml)

@@ -25,7 +25,7 @@ flowchart LR
 | **5 — Ship** | Human | Publish, push, RAG on, verify rendered report |
 | **6 — Test** | Human + agent | Probe questions; iterate metadata |
 
-Full agent instructions: **[kb-metadata-enrichment/SKILL.md](kb-metadata-enrichment/SKILL.md)**
+Full agent instructions: **[tpsreport-skill/SKILL.md](tpsreport-skill/SKILL.md)**
 
 ---
 
@@ -85,7 +85,7 @@ Examples: [examples/frontmatter-page-example.md](examples/frontmatter-page-examp
 ## Phase 4 — Lint
 
 ```bash
-python .cursor/skills/kb-metadata-enrichment/kb_lint.py path/to/Your_KB/
+python .cursor/skills/tpsreport-skill/kb_lint.py path/to/Your_KB/
 ```
 
 | Flag | Effect |
@@ -134,4 +134,4 @@ Plugin listing: [community.obsidian.md/plugins/tpsreport-sync](https://community
 
 ## Agent kickoff
 
-Copy **[KB_AGENT_PROMPT.md](kb-metadata-enrichment/KB_AGENT_PROMPT.md)**, fill in `[TOPIC]`, `[Folder_Name]`, and paste into Cursor / Claude Code.
+Copy **[KB_AGENT_PROMPT.md](tpsreport-skill/KB_AGENT_PROMPT.md)**, fill in `[TOPIC]`, `[Folder_Name]`, and paste into Cursor / Claude Code.

@@ -17,9 +17,9 @@ Agent workflows live under **`skills/`**:
 | Path | Purpose |
 |------|---------|
 | `skills/README.md` | Skills index |
-| `kb-metadata-enrichment/` | KB lifecycle skill + `kb_lint.py` + `metadata-contract.yaml` |
+| `tpsreport-skill/` | TPSReport KB skill + `kb_lint.py` + `metadata-contract.yaml` |
 
-Install: `cp -r kb-metadata-enrichment .cursor/skills/` or `npx skills add augmentableai/tpsreport-obsidian-sync --skill kb-metadata-enrichment -y`
+Install: `cp -r tpsreport-skill .cursor/skills/` or `npx skills add augmentableai/tpsreport-obsidian-sync --skill tpsreport-skill -y`
 
 Submit for indexing: [agentskill.sh/submit](https://agentskill.sh/submit), [skills.sh](https://skills.sh/docs)
 

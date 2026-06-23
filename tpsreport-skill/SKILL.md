@@ -1,18 +1,20 @@
 ---
-name: kb-metadata-enrichment
+name: tpsreport-skill
 description: >-
-  Build, enrich, lint, and iterate Obsidian knowledge bases for TPSReport Graph RAG.
-  Use when authoring KB folders for the TPSReport Obsidian plugin — seed content,
-  write RAG frontmatter (summary, keywords, hyde_questions, retrieval_hint), run
-  kb_lint.py, and prepare folders for push/sync.
+  TPSReport knowledge base skill for Obsidian — build, enrich, lint, and sync
+  Graph RAG-ready KB folders. Use when authoring TPSReport KBs, YAML frontmatter
+  (summary, keywords, hyde_questions, retrieval_hint), kb_lint.py validation,
+  or the TPSReport Obsidian plugin publish/push workflow.
 license: MIT
-compatibility: Requires Python 3.9+ and PyYAML for kb_lint.py. Pairs with TPSReport Obsidian plugin and a TPSReport account.
+compatibility: Requires Python 3.9+ and PyYAML for kb_lint.py. Pairs with the TPSReport Obsidian community plugin and a TPSReport account.
 metadata:
-  author: Augmentable LLC
-  version: "1.0.0"
+  author: augmentableai
+  version: "1.1.0"
+  product: TPSReport
+  plugin: tpsreport-sync
 ---
 
-# KB Lifecycle Manager Skill
+# TPSReport KB Skill
 
 The single workflow manager for a TPSReport knowledge base across its **whole
 lifecycle**: seeding new reports, generating content from guidance, enriching

@@ -1,4 +1,4 @@
-# KB Metadata Enrichment
+# TPSReport Skill
 
 **Agent skill for building retrieval-tuned Obsidian knowledge bases synced with [TPSReport](https://tpsreport.pro).**
 
@@ -26,14 +26,14 @@ The YAML contract is **not embedded in SKILL.md** on purpose — `kb_lint.py` an
 ### Cursor (project)
 
 ```bash
-cp -r kb-metadata-enrichment .cursor/skills/
+cp -r tpsreport-skill .cursor/skills/
 pip install pyyaml
 ```
 
 ### skills.sh / npx
 
 ```bash
-npx skills add augmentableai/tpsreport-obsidian-sync --skill kb-metadata-enrichment -y
+npx skills add augmentableai/tpsreport-obsidian-sync --skill tpsreport-skill -y
 ```
 
 → Full guide: [skills/INSTALL.md](skills/INSTALL.md)
@@ -69,7 +69,7 @@ Requires Python 3.9+ and `pip install pyyaml`.
 
 ## Kick off an agent
 
-1. Install this folder to `.cursor/skills/kb-metadata-enrichment/`
+1. Install this folder to `.cursor/skills/tpsreport-skill/`
 2. Open [KB_AGENT_PROMPT.md](KB_AGENT_PROMPT.md)
 3. Fill in `[TOPIC]`, `[Folder_Name]`, audience, voice
 4. Paste into Cursor / Claude Code
@@ -90,8 +90,8 @@ Submit for discovery: [skills/DIRECTORIES.md](skills/DIRECTORIES.md)
 
 | Directory | Submit |
 |-----------|--------|
-| [agentskill.sh](https://agentskill.sh/submit) | Repo: `augmentableai/tpsreport-obsidian-sync` or Direct URL: `https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/kb-metadata-enrichment/SKILL.md` |
-| [skills.sh](https://skills.sh) | `npx skills add augmentableai/tpsreport-obsidian-sync --skill kb-metadata-enrichment -y` |
+| [agentskill.sh](https://agentskill.sh/submit) | Repo: `augmentableai/tpsreport-obsidian-sync` or Direct URL: `https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/tpsreport-skill/SKILL.md` |
+| [skills.sh](https://skills.sh) | `npx skills add augmentableai/tpsreport-obsidian-sync --skill tpsreport-skill -y` |
 
 ---
 

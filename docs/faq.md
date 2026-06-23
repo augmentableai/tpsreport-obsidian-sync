@@ -75,12 +75,12 @@ Delete sync is a separate, explicit operation for mapped folders. Review mapping
 
 ### Is there a Cursor / agent workflow for building KBs?
 
-Yes. This repo ships **[kb-metadata-enrichment](../kb-metadata-enrichment/)** — a lifecycle skill plus `kb_lint.py` that validates frontmatter against the same contract the plugin Gatekeeper uses.
+Yes. This repo ships **[tpsreport-skill](../tpsreport-skill/)** — a lifecycle skill plus `kb_lint.py` that validates frontmatter against the same contract the plugin Gatekeeper uses.
 
-Copy to `.cursor/kb-metadata-enrichment/` in your vault project, or install via [skills.sh](https://skills.sh):
+Copy to `.cursor/tpsreport-skill/` in your vault project, or install via [skills.sh](https://skills.sh):
 
 ```bash
-npx skills add augmentableai/tpsreport-obsidian-sync --skill kb-metadata-enrichment -y
+npx skills add augmentableai/tpsreport-obsidian-sync --skill tpsreport-skill -y
 ```
 
 Full docs: [skills/README.md](../skills/README.md) · [INSTALL.md](../skills/INSTALL.md) · [examples/](../skills/examples/)
@@ -106,5 +106,5 @@ New versions are published as [GitHub releases](https://github.com/augmentableai
 | Product home | [tpsreport.pro](https://tpsreport.pro) |
 | Plugin repo | [github.com/augmentableai/tpsreport-obsidian-sync](https://github.com/augmentableai/tpsreport-obsidian-sync) |
 | Community listing | [community.obsidian.md/plugins/tpsreport-sync](https://community.obsidian.md/plugins/tpsreport-sync) |
-| KB authoring skills | [kb-metadata-enrichment](../kb-metadata-enrichment/) |
+| KB authoring skills | [tpsreport-skill](../tpsreport-skill/) |
 | Email | [arvind@augmentable.ai](mailto:arvind@augmentable.ai) |
