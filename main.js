@@ -230,6 +230,116 @@ function cleanFrontmatterObject(frontmatter) {
   return out;
 }
 
+function stripZeroWidth(s) {
+  return (s || "").replace(/\uFEFF/g, "").replace(/\u200B/g, "");
+}
+
+// Count *leading* frontmatter blocks. A block only counts if it parses to a
+// mapping, which separates a real `---` block from a `---` thematic rule in
+// prose. Zero-width/BOM chars (which hide a fence from every parser) are
+// stripped first. Mirrors kb_lint.py's extract_frontmatter_blocks.
+function extractLeadingFrontmatterBlocks(markdown) {
+  const hadBom = /[\uFEFF\u200B]/.test(markdown || "");
+  const text = stripZeroWidth(markdown || "");
+  const lines = text.split("\n");
+  const blocks = [];
+  const isFence = (s) => {
+    const t = s.trim();
+    return t === "---" || t === "...";
+  };
+  let i = 0;
+  const n = lines.length;
+  while (i < n) {
+    while (i < n && lines[i].trim() === "") i++;
+    if (i >= n || lines[i].trim() !== "---") break;
+    let j = i + 1;
+    while (j < n && !isFence(lines[j])) j++;
+    if (j >= n) break;
+    const rawBlock = lines.slice(i + 1, j).join("\n");
+    let parsed = null;
+    try {
+      parsed = typeof parseYaml === "function" ? parseYaml(rawBlock) : parseSimpleFrontmatterBlock(rawBlock);
+    } catch (e) {
+      parsed = null;
+    }
+    if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+      blocks.push(parsed);
+      i = j + 1;
+      continue;
+    }
+    if ((parsed === null || parsed === undefined) && rawBlock.trim() === "") {
+      blocks.push({});
+      i = j + 1;
+      continue;
+    }
+    break;
+  }
+  return { blocks, body: lines.slice(i).join("\n"), hadBom };
+}
+
+function mergeFrontmatterBlocks(blocks) {
+  const merged = {};
+  for (const b of blocks || []) {
+    if (!b || typeof b !== "object") continue;
+    for (const [k, v] of Object.entries(b)) merged[k] = v;
+  }
+  return merged;
+}
+
+// Contract mirrors (kept in sync with .cursor/skills/kb-metadata-enrichment/
+// metadata-contract.yaml). Used by the Gatekeeper health check.
+const KB_REQUIRED_CORE_KEYS = [
+  "summary",
+  "keywords",
+  "hyde_questions",
+  "retrieval_hint",
+  "intents",
+  "scenarios"
+];
+
+const KB_KEY_SYNONYMS = {
+  questions: "hyde_questions",
+  question: "hyde_questions",
+  hyde: "hyde_questions",
+  tldr: "summary",
+  abstract: "summary",
+  overview: "summary",
+  intent: "intents",
+  keyword: "keywords",
+  hint: "retrieval_hint",
+  router_hint: "retrieval_hint",
+  scenario: "scenarios"
+};
+
+function kbValueIsEmpty(v) {
+  if (v == null) return true;
+  if (typeof v === "string") return v.trim() === "";
+  if (Array.isArray(v)) return v.length === 0;
+  if (typeof v === "object") return Object.keys(v).length === 0;
+  return false;
+}
+
+function kbValueMatchesType(val, t) {
+  switch (t) {
+    case "str":
+      return typeof val === "string";
+    case "int":
+      return typeof val === "number" && Number.isInteger(val);
+    case "float":
+      return typeof val === "number";
+    case "bool":
+      return typeof val === "boolean";
+    case "list":
+      return Array.isArray(val);
+    case "map":
+      return val && typeof val === "object" && !Array.isArray(val);
+    case "str_or_list":
+      return typeof val === "string" || Array.isArray(val);
+    default:
+      return true;
+  }
+}
+
 function renderScalarYamlValue(value) {
   if (value === null) return "null";
   if (typeof value === "boolean") return value ? "true" : "false";
@@ -983,10 +1093,44 @@ class GatekeeperModal extends Modal {
     renderSection("Info", info);
 
     contentEl.createEl("hr");
+
+    const reportPath = this.plugin.healthReportPath ? this.plugin.healthReportPath() : "_KB_HEALTH.md";
+    if (errors.length || warnings.length) {
+      const note = contentEl.createEl("p");
+      note.style.color = "var(--text-muted)";
+      note.appendText(`A durable report was written to "${reportPath}" (top of vault). It stays until the KB is clean, and an LLM/agent can read it to fix the rest next round.`);
+    }
+
     const footer = contentEl.createEl("div");
     footer.style.display = "flex";
     footer.style.gap = "8px";
     footer.style.justifyContent = "flex-end";
+
+    const fixableCount = [...errors, ...warnings, ...info].filter((it) => it.actions && it.actions.length).length;
+    if (fixableCount) {
+      const healBtn = footer.createEl("button", { text: `Auto-heal all fixable (${fixableCount})` });
+      healBtn.classList.add("mod-cta");
+      healBtn.onclick = async () => {
+        this.close();
+        try {
+          await this.plugin.cmdAutoHealAll();
+        } catch (e) {
+          console.error(e);
+          new Notice(`❌ Auto-heal failed: ${e.message || String(e)}`);
+        }
+      };
+    }
+
+    const openReportBtn = footer.createEl("button", { text: "Open report" });
+    openReportBtn.onclick = async () => {
+      const af = this.app.vault.getAbstractFileByPath(reportPath);
+      if (af && af instanceof TFile) {
+        await this.app.workspace.getLeaf(true).openFile(af);
+        this.close();
+      } else {
+        new Notice("No report file (KB is clean).");
+      }
+    };
 
     const closeBtn = footer.createEl("button", { text: "Close" });
     closeBtn.onclick = () => this.close();
@@ -2284,6 +2428,7 @@ module.exports = class TPSReportSyncPlugin extends Plugin {
           new Notice("Current file is not in a TPSReport-mapped folder.");
           return;
         }
+        if (!(await this.preflightGate())) return;
         const ok = window.confirm(
           `Sync "${mapped.rootFolder.path}" to TPSReport?\n\n` +
             "This pushes local changes and runs delete sync: report nodes whose " +
@@ -2302,7 +2447,10 @@ module.exports = class TPSReportSyncPlugin extends Plugin {
     this.addCommand({
       id: "tpsreport-sync-push-all-mapped",
       name: "Sync all mapped reports",
-      callback: async () => this.cmdPushAllMappedFoldersSafeDeletes()
+      callback: async () => {
+        if (!(await this.preflightGate())) return;
+        return this.cmdPushAllMappedFoldersSafeDeletes();
+      }
     });
 
     this.addCommand({
@@ -2368,6 +2516,12 @@ module.exports = class TPSReportSyncPlugin extends Plugin {
       id: "tpsreport-sync-gatekeeper",
       name: "Run health check",
       callback: async () => this.cmdRunGatekeeper(true)
+    });
+
+    this.addCommand({
+      id: "tpsreport-sync-autoheal",
+      name: "Auto-heal KB metadata (fix what's mechanical)",
+      callback: async () => this.cmdAutoHealAll()
     });
 
     this.addCommand({
@@ -3293,16 +3447,75 @@ module.exports = class TPSReportSyncPlugin extends Plugin {
     const warnings = [];
     const info = [];
 
-    // Scan vault markdown files (excluding .obsidian)
-    const mdFiles = this.app.vault.getMarkdownFiles().filter((f) => !isInObsidianSystemPath(f.path));
+    // Scan vault markdown files (excluding .obsidian). SCOPING: only check files
+    // under a mapped KB folder — never a client's personal/daily notes. If no
+    // folders are mapped yet (fresh setup), fall back to the whole vault.
+    const allMd = this.app.vault.getMarkdownFiles().filter((f) => !isInObsidianSystemPath(f.path));
+    const mappedRoots = Object.keys(this.settings.folderToReportId || {}).map((p) => normalizePath(p));
+    const isUnderMappedRoot = (p) => {
+      const np = normalizePath(p);
+      return mappedRoots.some((r) => np === r || np.startsWith(r.endsWith("/") ? r : r + "/"));
+    };
+    const reportPath = this.healthReportPath();
+    const scoped = mappedRoots.length ? allMd.filter((f) => isUnderMappedRoot(f.path)) : allMd;
+    const mdFiles = scoped.filter((f) => normalizePath(f.path) !== normalizePath(reportPath));
+
+    // Per-KB custom field schema: read kb_schema from each mapped folder's
+    // 00_CONTEXT.md (or 00_index.md). Maps a KB root -> { field: {type, required} }.
+    const kbSchemaByRoot = new Map();
+    for (const root of mappedRoots) {
+      for (const ctx of ["00_CONTEXT.md", "00_index.md", "00_guidance.md"]) {
+        const af = this.app.vault.getAbstractFileByPath(root ? `${root}/${ctx}` : ctx);
+        if (af instanceof TFile) {
+          try {
+            const raw = await this.app.vault.read(af);
+            const fm = mergeFrontmatterBlocks(extractLeadingFrontmatterBlocks(raw).blocks);
+            if (fm && typeof fm.kb_schema === "object" && fm.kb_schema) {
+              kbSchemaByRoot.set(root, fm.kb_schema);
+            }
+          } catch (e) {
+            /* ignore unreadable context */
+          }
+          break;
+        }
+      }
+    }
+    const schemaForFile = (p) => {
+      const np = normalizePath(p);
+      let best = null;
+      let bestLen = -1;
+      for (const [root, schema] of kbSchemaByRoot.entries()) {
+        if ((np === root || np.startsWith(root.endsWith("/") ? root : root + "/")) && root.length > bestLen) {
+          best = schema;
+          bestLen = root.length;
+        }
+      }
+      return best || {};
+    };
 
     const idToFiles = new Map();
     const missingIdFiles = [];
     const orphanFiles = [];
+    const doubleFmFiles = [];
+    const bomFiles = [];
+    const synonymHits = [];      // { path, bad, good }
+    const missingCoreFiles = []; // { path, missing: [...] }
+    const canonicalOwner = new Map(); // topic -> first path
+    const dupCanonical = [];     // { path, topic, owner }
+    const customMissing = [];    // { path, field }
+    const customTypeErr = [];    // { path, field, type }
 
     for (const f of mdFiles) {
       const raw = await this.app.vault.read(f);
-      const { frontmatter } = parseFrontmatter(raw);
+
+      // Multi-block frontmatter detection (the metadata-bleed bug). Uses the
+      // BOM-aware extractor so a zero-width char before a 2nd `---` is caught.
+      const { blocks, hadBom } = extractLeadingFrontmatterBlocks(raw);
+      if (blocks.length > 1) doubleFmFiles.push(f.path);
+      if (hadBom) bomFiles.push(f.path);
+
+      const frontmatter = mergeFrontmatterBlocks(blocks);
+
       const id = frontmatter && typeof frontmatter[nodeKey] === "string" ? frontmatter[nodeKey] : null;
       if (!id) {
         missingIdFiles.push(f.path);
@@ -3311,10 +3524,136 @@ module.exports = class TPSReportSyncPlugin extends Plugin {
         idToFiles.get(id).push(f.path);
       }
 
+      // Synonym traps (a value in the wrong key is silently ignored by retrieval).
+      for (const k of Object.keys(frontmatter)) {
+        const good = KB_KEY_SYNONYMS[k];
+        if (good && frontmatter[good] === undefined) {
+          synonymHits.push({ path: f.path, bad: k, good });
+        }
+      }
+
+      // Missing core retrieval keys — skip index/guidance docs.
+      const isIndexLike =
+        /(^|\/)00_/.test(f.path) ||
+        !kbValueIsEmpty(frontmatter.guidance_type) ||
+        ["section", "guidance"].includes(String(frontmatter.index_type || "").toLowerCase());
+      if (!isIndexLike) {
+        const missing = KB_REQUIRED_CORE_KEYS.filter((k) => kbValueIsEmpty(frontmatter[k]));
+        if (missing.length) missingCoreFiles.push({ path: f.path, missing });
+
+        // Per-KB custom fields (declared in 00_CONTEXT kb_schema).
+        const customSchema = schemaForFile(f.path);
+        for (const [field, specRaw] of Object.entries(customSchema)) {
+          const spec = specRaw && typeof specRaw === "object" ? specRaw : {};
+          const present = !kbValueIsEmpty(frontmatter[field]);
+          if (spec.required && !present) {
+            customMissing.push({ path: f.path, field });
+          }
+          if (present && spec.type && !kbValueMatchesType(frontmatter[field], spec.type)) {
+            customTypeErr.push({ path: f.path, field, type: spec.type });
+          }
+        }
+      }
+
+      // canonical_for uniqueness (accepts scalar or list)
+      const cf = frontmatter.canonical_for;
+      const cfTopics = Array.isArray(cf) ? cf : (typeof cf === "string" && cf.trim() ? [cf] : []);
+      for (const topic of cfTopics) {
+        const t = String(topic).trim().toLowerCase();
+        if (!t) continue;
+        if (canonicalOwner.has(t) && canonicalOwner.get(t) !== f.path) {
+          dupCanonical.push({ path: f.path, topic: t, owner: canonicalOwner.get(t) });
+        } else if (!canonicalOwner.has(t)) {
+          canonicalOwner.set(t, f.path);
+        }
+      }
+
       // Orphan heuristic: file in vault root (no folder) OR mapped folder missing
       if (!f.parent || !(f.parent instanceof TFolder) || f.parent.path === "/") {
         orphanFiles.push(f.path);
       }
+    }
+
+    // Double frontmatter — the metadata-bleed bug. Offer a one-click merge+strip.
+    if (doubleFmFiles.length) {
+      const filesCopy = [...doubleFmFiles];
+      errors.push({
+        code: "DOUBLE_FRONTMATTER",
+        message: `${filesCopy.length} file(s) have more than one leading "---" block (or a BOM-hidden second block). The extra YAML renders into the page body. Merge into a single block.`,
+        files: filesCopy.slice(0, 50),
+        actions: [
+          {
+            label: "Auto-fix: merge into one frontmatter block",
+            run: async () => {
+              let fixed = 0;
+              for (const p of filesCopy) {
+                const af = this.app.vault.getAbstractFileByPath(p);
+                if (!(af instanceof TFile)) continue;
+                const raw = await this.app.vault.read(af);
+                const { blocks, body } = extractLeadingFrontmatterBlocks(raw);
+                if (blocks.length < 2) continue;
+                const merged = cleanFrontmatterObject(mergeFrontmatterBlocks(blocks));
+                const yamlText =
+                  typeof stringifyYaml === "function"
+                    ? stringifyYaml(merged)
+                    : Object.entries(merged).map(([k, v]) => `${k}: ${renderScalarYamlValue(v)}`).join("\n") + "\n";
+                const rebuilt = `---\n${yamlText}${yamlText.endsWith("\n") ? "" : "\n"}---\n${body.replace(/^\n+/, "")}`;
+                await this.app.vault.modify(af, rebuilt);
+                fixed++;
+              }
+              new Notice(`Merged frontmatter in ${fixed} file(s).`);
+            }
+          }
+        ]
+      });
+    }
+
+    if (bomFiles.length) {
+      warnings.push({
+        code: "BOM_PRESENT",
+        message: `${bomFiles.length} file(s) contain a UTF-8 BOM / zero-width char that can hide a frontmatter fence from the renderer.`,
+        files: bomFiles.slice(0, 50)
+      });
+    }
+
+    if (synonymHits.length) {
+      warnings.push({
+        code: "UNKNOWN_KEY",
+        message: `${synonymHits.length} synonym key(s) TPSReport does not read (value is silently ignored by retrieval).`,
+        files: synonymHits.slice(0, 50).map((h) => `${h.path} — "${h.bad}" should be "${h.good}"`)
+      });
+    }
+
+    if (missingCoreFiles.length) {
+      warnings.push({
+        code: "MISSING_CORE_KEY",
+        message: `${missingCoreFiles.length} content file(s) are missing core retrieval keys (summary/keywords/hyde_questions/retrieval_hint/intents/scenarios).`,
+        files: missingCoreFiles.slice(0, 50).map((m) => `${m.path} — missing: ${m.missing.join(", ")}`)
+      });
+    }
+
+    if (dupCanonical.length) {
+      errors.push({
+        code: "DUP_CANONICAL",
+        message: `${dupCanonical.length} duplicate canonical_for claim(s) — two docs can't both be the single source of truth for a topic.`,
+        files: dupCanonical.slice(0, 50).map((d) => `${d.path} — "${d.topic}" already owned by ${d.owner}`)
+      });
+    }
+
+    if (customMissing.length) {
+      errors.push({
+        code: "CUSTOM_REQUIRED_MISSING",
+        message: `${customMissing.length} file(s) missing a KB-required custom field (declared in 00_CONTEXT kb_schema).`,
+        files: customMissing.slice(0, 50).map((c) => `${c.path} — requires "${c.field}"`)
+      });
+    }
+
+    if (customTypeErr.length) {
+      errors.push({
+        code: "WRONG_TYPE",
+        message: `${customTypeErr.length} custom field value(s) have the wrong YAML type vs the KB's kb_schema.`,
+        files: customTypeErr.slice(0, 50).map((c) => `${c.path} — "${c.field}" should be ${c.type}`)
+      });
     }
 
     // Duplicate IDs
@@ -3361,10 +3700,180 @@ module.exports = class TPSReportSyncPlugin extends Plugin {
     }
 
     const results = { errors, warnings, info };
+
+    // Persistent hand-off. Obsidian Notices vanish in seconds, so they can't be
+    // the system of record. We write a durable vault file the user can see in the
+    // file explorer AND the next LLM/agent round can read + fix from.
+    try {
+      await this.writeKbHealthReport(results);
+    } catch (e) {
+      console.warn("[TPS] writeKbHealthReport failed", e);
+    }
+
+    const errN = errors.length;
+    const warnN = warnings.length;
+    if (errN + warnN === 0) {
+      new Notice("✅ KB Health: all checks passed.", 6000);
+    } else {
+      new Notice(
+        `KB Health: ${errN} error(s), ${warnN} warning(s). Opened ${this.healthReportPath()} — fix list + auto-heal there.`,
+        9000
+      );
+    }
+
     if (showModal) {
       new GatekeeperModal(this.app, this, results).open();
     }
     return results;
+  }
+
+  healthReportPath() {
+    return (this.settings.healthReportPath || "_KB_HEALTH.md").trim() || "_KB_HEALTH.md";
+  }
+
+  // Run before a destructive push. Writes the durable report, and if there are
+  // hard ERRORS, surfaces them (modal + report) and returns false so the caller
+  // can pause. Warnings never block. Set settings.gateOnPush=false to disable.
+  async preflightGate() {
+    if (this.settings.gateOnPush === false) return true;
+    const results = await this.cmdRunGatekeeper(false); // writes _KB_HEALTH.md
+    if (!results.errors.length) return true;
+    new Notice(
+      `Push paused: ${results.errors.length} KB error(s). Use "Auto-heal all fixable" or fix ${this.healthReportPath()}, then push again.`,
+      10000
+    );
+    new GatekeeperModal(this.app, this, results).open();
+    return false;
+  }
+
+  // All findings that carry an auto-fix action, flattened.
+  collectAutoFixActions(results) {
+    const out = [];
+    for (const bucket of ["errors", "warnings", "info"]) {
+      for (const it of results[bucket] || []) {
+        for (const a of it.actions || []) out.push({ code: it.code, action: a });
+      }
+    }
+    return out;
+  }
+
+  // Run every available auto-fix, then re-scan so the report/modal refresh.
+  async cmdAutoHealAll() {
+    const results = await this.cmdRunGatekeeper(false);
+    const fixes = this.collectAutoFixActions(results);
+    if (!fixes.length) {
+      new Notice("Nothing auto-fixable. Remaining items need an LLM/human (see report).");
+      return await this.cmdRunGatekeeper(true);
+    }
+    let ok = 0;
+    for (const { code, action } of fixes) {
+      try {
+        await action.run();
+        ok++;
+      } catch (e) {
+        console.error("[TPS] auto-heal failed for", code, e);
+      }
+    }
+    new Notice(`Auto-healed ${ok}/${fixes.length} fixable item(s). Re-scanning…`, 6000);
+    return await this.cmdRunGatekeeper(true);
+  }
+
+  buildKbHealthMarkdown(results) {
+    const { errors, warnings, info } = results;
+    const ts = isoNow();
+    const errN = errors.length;
+    const warnN = warnings.length;
+    const status = errN === 0 && warnN === 0 ? "✅ HEALTHY" : errN > 0 ? "❌ ERRORS" : "⚠️ WARNINGS";
+
+    const machine = {
+      generated_at: ts,
+      status: errN === 0 && warnN === 0 ? "healthy" : errN > 0 ? "errors" : "warnings",
+      counts: { errors: errN, warnings: warnN, info: info.length },
+      findings: []
+    };
+    const pushMachine = (sev, it) => {
+      machine.findings.push({
+        severity: sev,
+        code: it.code,
+        message: it.message,
+        auto_fixable: !!(it.actions && it.actions.length),
+        files: it.files || []
+      });
+    };
+    for (const it of errors) pushMachine("error", it);
+    for (const it of warnings) pushMachine("warning", it);
+    for (const it of info) pushMachine("info", it);
+
+    const lines = [];
+    lines.push("---");
+    lines.push("tps_artifact: kb_health_report");
+    lines.push("do_not_sync: true");
+    lines.push("---");
+    lines.push("");
+    lines.push(`# KB Health Report — ${status}`);
+    lines.push("");
+    lines.push(`Generated: ${ts}`);
+    lines.push("");
+    lines.push(`**${errN} error(s) · ${warnN} warning(s) · ${info.length} info**`);
+    lines.push("");
+    lines.push("> This file is auto-generated by the TPSReport Gatekeeper. It is the");
+    lines.push("> durable record of KB metadata health (Obsidian notifications vanish).");
+    lines.push("> An LLM/agent should read the JSON block at the bottom, fix the items,");
+    lines.push("> then re-run **TPSReport: Run gatekeeper health check**. When everything");
+    lines.push("> passes, this file is cleared automatically. Use **Auto-heal all");
+    lines.push("> fixable** for the mechanical fixes first.");
+    lines.push("");
+
+    const section = (title, items) => {
+      lines.push(`## ${title}`);
+      if (!items.length) {
+        lines.push("");
+        lines.push("_None._");
+        lines.push("");
+        return;
+      }
+      for (const it of items) {
+        const tag = it.actions && it.actions.length ? "🔧 auto-fixable" : "✍️ needs LLM/human";
+        lines.push(`### \`${it.code}\` — ${tag}`);
+        lines.push("");
+        lines.push(it.message);
+        if (it.files && it.files.length) {
+          lines.push("");
+          for (const f of it.files.slice(0, 100)) lines.push(`- [ ] ${f}`);
+        }
+        lines.push("");
+      }
+    };
+    section("Errors (block a clean push)", errors);
+    section("Warnings (recommended)", warnings);
+    if (info.length) section("Info", info);
+
+    lines.push("## Machine-readable (for the next agent round)");
+    lines.push("");
+    lines.push("```json");
+    lines.push(JSON.stringify(machine, null, 2));
+    lines.push("```");
+    lines.push("");
+    return lines.join("\n");
+  }
+
+  async writeKbHealthReport(results) {
+    const path = this.healthReportPath();
+    const existing = this.app.vault.getAbstractFileByPath(path);
+    const clean = results.errors.length === 0 && results.warnings.length === 0;
+
+    // When healthy, remove the report so a stale file never lingers.
+    if (clean) {
+      if (existing instanceof TFile) await this.app.vault.delete(existing);
+      return;
+    }
+
+    const md = this.buildKbHealthMarkdown(results);
+    if (existing instanceof TFile) {
+      await this.app.vault.modify(existing, md);
+    } else {
+      await this.app.vault.create(path, md);
+    }
   }
 
   async cmdResolveConflicts() {

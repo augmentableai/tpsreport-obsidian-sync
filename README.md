@@ -5,7 +5,7 @@
 [![TPSReport](https://img.shields.io/badge/Product-tpsreport.pro-2563eb?style=for-the-badge)](https://tpsreport.pro)
 [![Obsidian community plugin](https://img.shields.io/badge/Obsidian-Community%20Plugin-7c3aed?style=for-the-badge)](https://community.obsidian.md/plugins?tpsreport-sync)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.2.1-blue?style=for-the-badge)](https://github.com/augmentableai/tpsreport-obsidian-sync/releases)
+[![Version](https://img.shields.io/badge/version-1.2.2-blue?style=for-the-badge)](https://github.com/augmentableai/tpsreport-obsidian-sync/releases)
 
 > **Official Obsidian companion for [TPSReport AI Brain & Knowledge Management](https://tpsreport.pro).**  
 > Write in your vault. Publish structured knowledge reports. Sync Markdown, metadata, and images to a cloud workspace built for Graph RAG, access control, and agent-ready retrieval.
