@@ -8,24 +8,52 @@ Where to list **TPSReport Obsidian plugin** and **KB Metadata Enrichment** skill
 
 ---
 
+## How skills.sh indexing works (important)
+
+**There is no manual “submit” form and no `npx skills publish` command** in the current [vercel-labs/skills](https://github.com/vercel-labs/skills) CLI.
+
+skills.sh is a **leaderboard driven by install telemetry**:
+
+1. Host skill in a **public GitHub repo** with valid `SKILL.md` ✓
+2. Users run **`npx skills add owner/repo`** — each install sends anonymous telemetry
+3. After enough installs, the skill appears in [skills.sh](https://skills.sh) search & rankings
+
+**Subfolder skills** (like ours) require `--full-depth`:
+
+```bash
+npx skills add augmentableai/tpsreport-obsidian-sync --full-depth -y
+```
+
+**To seed your own listing:** run the install command yourself (and share the command in README). That counts as the first install event.
+
+**Badge** (add to README after installs accumulate):
+
+```markdown
+[![skills.sh](https://skills.sh/b/augmentableai/tpsreport-obsidian-sync)](https://skills.sh/augmentableai/tpsreport-obsidian-sync)
+```
+
+For a **submit form with webhook sync**, use [agentskill.sh/submit](https://agentskill.sh/submit) instead.
+
+---
+
 ## Submit now (high priority)
 
 | Directory | Action | URL |
 |-----------|--------|-----|
-| **skills.sh** | `npx skills publish` from skill folder, or browse docs | [skills.sh](https://skills.sh) · [docs](https://skills.sh/docs) |
-| **agentskill.sh** | Submit GitHub repo URL | [agentskill.sh/submit](https://agentskill.sh/submit) |
+| **skills.sh** | Share install command; run once yourself to seed telemetry | [skills.sh](https://skills.sh) · [docs](https://skills.sh/docs) |
+| **agentskill.sh** | Submit GitHub repo URL (has webhook sync) | [agentskill.sh/submit](https://agentskill.sh/submit) |
 | **GitHub** | Topics on repo (already set): `obsidian-plugin`, `tpsreport`, `cursor-skill`, `knowledge-base`, `graph-rag`, `agent-skills` | [Repo settings](https://github.com/augmentableai/tpsreport-obsidian-sync) |
 | **tpsreport.pro** | Link plugin listing + `skills/` path from product docs | [tpsreport.pro](https://tpsreport.pro) |
 | **Obsidian forum** | Showcase post: plugin + KB skill workflow | [forum.obsidian.md](https://forum.obsidian.md) |
 
-### Install commands to publish
+### Install commands (skills.sh)
 
 ```bash
-# End users install the skill
-npx skills add augmentableai/tpsreport-obsidian-sync/skills/kb-metadata-enrichment
+# End users — skill lives in skills/kb-metadata-enrichment/
+npx skills add augmentableai/tpsreport-obsidian-sync --full-depth -y
 
-# Maintainers publish updates (after GitHub push)
-cd skills/kb-metadata-enrichment && npx skills publish
+# Maintainer — seed your own skills.sh telemetry (run once after pushing)
+npx skills add augmentableai/tpsreport-obsidian-sync --full-depth -y
 ```
 
 ### agentskill.sh webhook (instant sync)

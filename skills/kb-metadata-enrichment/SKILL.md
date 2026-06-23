@@ -1,7 +1,18 @@
 ---
-name: KB Lifecycle Manager (TPSReport / Obsidian)
-description: End-to-end workflow manager for building, enriching, assessing, and iterating a rich Obsidian knowledge base for TPSReport Graph RAG — seed -> guidance -> content -> RAG metadata -> assess existing reports -> test/iterate -> lint -> push -> online gating/visibility.
-tags: [tpsreport, obsidian, knowledge-base, rag, frontmatter, guidance, metadata, retrieval, lifecycle, graph-rag, affiliate-kb]
+name: kb-metadata-enrichment
+description: >-
+  Build, enrich, lint, and iterate Obsidian knowledge bases for TPSReport Graph RAG.
+  Use when authoring KB folders for the TPSReport Obsidian plugin — seed content,
+  write RAG frontmatter (summary, keywords, hyde_questions, retrieval_hint), run
+  kb_lint.py, and prepare folders for push/sync.
+license: MIT
+compatibility: Requires Python 3.9+ and PyYAML for kb_lint.py. Pairs with TPSReport Obsidian plugin and a TPSReport account.
+metadata:
+  author: Augmentable LLC
+  version: "1.0.0"
+  display_name: KB Lifecycle Manager (TPSReport / Obsidian)
+  homepage: https://community.obsidian.md/plugins/tpsreport-sync
+  tags: tpsreport, obsidian, knowledge-base, rag, frontmatter, metadata, graph-rag
 ---
 
 # KB Lifecycle Manager Skill
