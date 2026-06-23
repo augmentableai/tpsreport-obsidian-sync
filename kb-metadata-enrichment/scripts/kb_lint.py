@@ -42,7 +42,7 @@ except ImportError:  # pragma: no cover
     sys.stderr.write("kb_lint.py requires PyYAML (pip install pyyaml)\n")
     sys.exit(2)
 
-CONTRACT_PATH = Path(__file__).with_name("metadata-contract.yaml")
+CONTRACT_PATH = Path(__file__).resolve().parent.parent / "references" / "metadata-contract.yaml"
 
 
 # --------------------------------------------------------------------------- #

@@ -43,9 +43,9 @@ npx skills add augmentableai/tpsreport-obsidian-sync --skill kb-metadata-enrichm
 ## Validate
 
 ```bash
-python .cursor/skills/kb-metadata-enrichment/kb_lint.py path/to/Your_KB/
-python .cursor/skills/kb-metadata-enrichment/kb_lint.py path/to/Your_KB/ --strict
-python .cursor/skills/kb-metadata-enrichment/kb_lint.py path/to/Your_KB/ --json
+python scripts/kb_lint.py path/to/Your_KB/
+python scripts/kb_lint.py path/to/Your_KB/ --strict
+python scripts/kb_lint.py path/to/Your_KB/ --json
 ```
 
 Requires Python 3.9+ and `pip install pyyaml`.
@@ -78,7 +78,7 @@ Requires Python 3.9+ and `pip install pyyaml`.
 
 ## Plugin source of truth
 
-Frontmatter keys and sync behaviour: [`main.js`](../main.js) (`RAG_FM_KEYS`, Gatekeeper).
+Frontmatter keys and sync behaviour: [main.js](https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/main.js) (`RAG_FM_KEYS`, Gatekeeper).
 
 When the plugin adds new retrieval keys, update `metadata-contract.yaml` and re-run lint on your KBs.
 

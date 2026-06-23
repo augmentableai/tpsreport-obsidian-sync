@@ -10,9 +10,6 @@ compatibility: Requires Python 3.9+ and PyYAML for kb_lint.py. Pairs with TPSRep
 metadata:
   author: Augmentable LLC
   version: "1.0.0"
-  display_name: KB Lifecycle Manager (TPSReport / Obsidian)
-  homepage: https://community.obsidian.md/plugins/tpsreport-sync
-  tags: tpsreport, obsidian, knowledge-base, rag, frontmatter, metadata, graph-rag
 ---
 
 # KB Lifecycle Manager Skill
@@ -30,12 +27,12 @@ phase inside a closed build->push->measure->iterate loop.
 Reference vaults for examples: sample KBs in your Obsidian vault or TPSReport workspace (structure mirrors affiliate / industry KB patterns on [tpsreport.pro](https://tpsreport.pro)).
 
 Plugin source (authoritative key lists + sync behaviour):
-[`main.js`](../main.js) in [tpsreport-obsidian-sync](https://github.com/augmentableai/tpsreport-obsidian-sync).
+[`main.js`](https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/main.js) in [tpsreport-obsidian-sync](https://github.com/augmentableai/tpsreport-obsidian-sync).
 
 Tooling shipped with this skill (use them — don't eyeball metadata):
-- `metadata-contract.yaml` — machine-readable contract: the exact keys, types,
+- [references/metadata-contract.yaml](references/metadata-contract.yaml) — machine-readable contract: the exact keys, types,
   required core, synonym traps, and value rules. Single source of truth.
-- `kb_lint.py` — deterministic validator. Phase 4 runs this and must reach exit 0.
+- [scripts/kb_lint.py](scripts/kb_lint.py) — deterministic validator. Phase 4 runs this and must reach exit 0.
   The plugin's Gatekeeper enforces the same rules at the sync boundary.
 
 ## When To Use This Skill
@@ -57,7 +54,7 @@ never push KB content without the user's explicit go-ahead.
 ## The Metadata Contract (what TPSReport actually reads)
 
 The plugin extracts these frontmatter keys for retrieval (`RAG_FM_KEYS` in
-[`main.js`](../main.js)). **Target exactly these names** — a
+[`main.js`](https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/main.js)). **Target exactly these names** — a
 synonym in the wrong key is ignored.
 
 | Key | Type | Purpose |
@@ -123,15 +120,15 @@ control their own fields by editing `00_CONTEXT`, no central registry or rebuild
 
 ## Where validation runs (and who needs Python)
 
-Three audiences, one shared rule set (`metadata-contract.yaml`):
+Three audiences, one shared rule set ([references/metadata-contract.yaml](references/metadata-contract.yaml)):
 
 | Audience | Tool | Python? |
 |----------|------|---------|
-| **Authoring agent** (this skill, in Cursor/SDK with shell) | `kb_lint.py` | Yes — dev/CI only, never shipped to clients |
+| **Authoring agent** (this skill, in Cursor/SDK with shell) | [scripts/kb_lint.py](scripts/kb_lint.py) | Yes — dev/CI only, never shipped to clients |
 | **End client** (installs the Obsidian plugin) | the plugin **Gatekeeper** (JS, in-plugin) | No |
 | **Server of record** (optional, strongest gate) | backend `/validate` on push | runs on the server, not the client |
 
-`kb_lint.py` is the agent's in-loop checker — clients never run it. The plugin
+[scripts/kb_lint.py](scripts/kb_lint.py) is the agent's in-loop checker — clients never run it. The plugin
 Gatekeeper is the JS port of the same rules for humans (with one-click auto-fix
 for `DOUBLE_FRONTMATTER`). Both scope to **KB-managed files only** (the python
 linter skips notes outside KB context folders; the plugin only checks files under
@@ -264,7 +261,7 @@ LLMs pass their own checklists even when the output is wrong (a BOM-hidden secon
 1. Run the deterministic linter against the KB folder:
 
 ```bash
-python .cursor/skills/kb-metadata-enrichment/kb_lint.py <kb-folder>
+python scripts/kb_lint.py <kb-folder>
 ```
 
 2. **Fix every `error`** (DOUBLE_FRONTMATTER, YAML_PARSE_ERROR, BROKEN_XREF,
@@ -274,7 +271,7 @@ python .cursor/skills/kb-metadata-enrichment/kb_lint.py <kb-folder>
    linter is red. Use `--json` to consume findings programmatically, `--strict`
    to also fail on warnings, `--quiet` to hide info.
 
-The linter reads `metadata-contract.yaml` (the single source of truth for valid
+The linter reads [references/metadata-contract.yaml](references/metadata-contract.yaml) (the single source of truth for valid
 metadata). The Obsidian plugin's **Gatekeeper** (`Run gatekeeper health check`)
 enforces the same rules at the sync boundary — so a clean linter locally should
 mean a clean Gatekeeper before push. Optionally set a shared `metadata_canary`
@@ -291,7 +288,7 @@ hidden; only the `obs_` API key is configured):
    Agency / Public) and **Knowledge Base (RAG) enabled** toggle so the right
    TPSReport agents can retrieve it. RAG-on is what makes the doc queryable
    by agents; sharing preset controls who/which workspace sees it online.
-4. Open the rendered report in HiFi-WP and confirm summary/keywords/questions
+4. Open the rendered report in TPSReport and confirm summary/keywords/questions
    surface.
 
 > Never push without the user's explicit go-ahead. The push is destructive
@@ -317,136 +314,11 @@ After a push, treat the KB as a system to tune for the agents that query it:
 This closes the loop: build -> push -> measure against agent questions -> shift ->
 repeat, which is the "seamless build, local push, online capability" goal.
 
-## Worked Example (grounded in this KB)
+## Examples & quality bar
 
-A network profile like `02_Network_Profiles/clickbank.md` starts with empty
-enrichment keys. Derived purely from its body:
-
-```yaml
-summary: >-
-  ClickBank is the largest digital-product marketplace, paying 30-75% RevShare
-  (avg ~50%) on courses, ebooks, software, and supplements, with a sticky 60-day
-  cookie and weekly/bi-weekly payouts ($10 minimum after a one-time $100
-  threshold). Its proprietary Gravity score signals how many affiliates sold a
-  product in the last 12 weeks; the 20-100 range is the sweet spot.
-keywords:
-  - ClickBank
-  - HopLink
-  - Gravity score
-  - digital products
-  - RevShare
-  - 60-day cookie
-  - Avg $/Conversion
-  - recurring commissions
-  - info products
-  - supplements
-tags:
-  - network-profile
-  - marketplace
-  - digital-products
-intents:
-  - evaluate_network
-  - choose_clickbank_offers
-  - understand_gravity_score
-  - payout_timeline_lookup
-hyde_questions:
-  - What commission does ClickBank pay?
-  - What is a good ClickBank Gravity score?
-  - How long is the ClickBank cookie?
-  - When does ClickBank pay affiliates and what is the minimum payout?
-  - Is ClickBank good for beginners?
-  - How do I find winning offers on the ClickBank marketplace?
-retrieval_hint: >-
-  Use for all ClickBank-specific questions — Gravity, HopLinks, marketplace
-  navigation, refund-rate math, and payout timing. Do NOT use for physical-product,
-  SaaS, or CPA-network questions.
-scenarios:
-  - beginner picking a first digital-product network
-  - affiliate vetting an offer by Gravity and refund rate
-  - creator comparing recurring vs one-time commission programs
-canonical_for:
-  - clickbank
-  - gravity-score
-defers_to:
-  digital-product-strategy: digital-courses-and-info-products
-  recurring-commissions: recurring-vs-one-time-commissions
-entities:
-  - ClickBank
-brands:
-  - ClickBank
-topics:
-  - affiliate-networks
-  - digital-products
-audience: beginner-to-intermediate affiliates
-region: global
-metadata_canary: kb-affiliate-2026
-```
-
-Note: the existing `title`, `description`, `date`, `topic`, `see_also`, and all
-`node_id`/`sync_status`/`last_synced`/`tps_content_hash` lines are **left exactly
-as they were**.
-
-### Seed example (Phase 1 — guidance-first, before a body exists)
-
-When the coverage map flags a gap (e.g. "affiliate marketing in 2026 regulatory
-changes"), seed the report with the Guidance Contract first:
-
-```yaml
-title: 2026 Affiliate Regulatory Changes
-description: How 2026 FTC/EU rule changes affect affiliate disclosure and tracking
-date: 2026-06-19
-topic: affiliate-programs
-guidance_type: report
-research_brief: >-
-  Explain what changed for affiliates in 2026 across FTC disclosure and EU cookie
-  rules, and what an affiliate must DO differently. Answers the agent question
-  "what do the 2026 rule changes mean for my affiliate site?"
-content_structure:
-  - What changed (FTC + EU), dated
-  - Impact on disclosure language
-  - Impact on cookie/tracking
-  - Action checklist for affiliates
-source_materials:
-  - https://www.ftc.gov/  # replace with the exact rule pages used
-llm_instructions: >-
-  Match the KB voice: blunt, tactical, numbers-first. No fluff. End with a
-  concrete checklist. Cite each rule change to its source.
-```
-
-Phase 2 then fills `research_notes` + the body; Phase 3 adds the RAG layer above.
-
-## Quality Bar (enforced by `kb_lint.py` — codes in brackets)
-
-> This is the linter's rule set in human form. Run the script; don't hand-check.
-> A green `kb_lint.py` run is the definition of "passes the Quality Bar."
-
-- [ ] Exactly one leading `---` frontmatter block; no BOM/zero-width before a
-      fence `[DOUBLE_FRONTMATTER]` `[BOM_PRESENT]`.
-- [ ] Frontmatter is valid YAML (no tab indentation; special-char strings quoted)
-      `[YAML_PARSE_ERROR]`.
-- [ ] Only contract keys; no synonyms (`questions`→`hyde_questions`) or dedented
-      `see_also` sub-fields `[UNKNOWN_KEY]`.
-- [ ] Core keys present and non-empty `[MISSING_CORE_KEY]` `[EMPTY_VALUE]`.
-- [ ] `summary` reads standalone, includes distinctive numbers (>= 60 chars)
-      `[SUMMARY_TOO_SHORT]`.
-- [ ] `keywords` cover acronyms + expansions + named entities (8-20) `[LIST_LEN]`.
-- [ ] `hyde_questions` are real user phrasings the doc fully answers (4-8)
-      `[LIST_LEN]`.
-- [ ] `retrieval_hint` includes BOTH when-to-use and a "Do NOT use for ..." clause
-      `[NO_NEGATIVE_CLAUSE]`.
-- [ ] Keys have the right YAML type (e.g. `lifecycle_position` is an int) `[WRONG_TYPE]`.
-- [ ] `intents`/`tags` reuse the KB's shared vocabulary (consistent across files).
-- [ ] Cross-reference keys (`see_also`, `defers_to`, `unlocks`, `prerequisites`)
-      use real file slugs that exist in the vault `[BROKEN_XREF]`.
-- [ ] No two docs claim the same `canonical_for` topic `[DUP_CANONICAL]`.
-- [ ] `metadata_canary` consistent across the KB `[CANARY_MISMATCH]`.
-- [ ] No invented facts; every metadata value is supported by the body.
-- [ ] Plugin-managed keys (`node_id`, `sync_status`, `last_synced`,
-      `tps_content_hash`) are untouched.
-- [ ] Voice/structure of finished bodies is unchanged.
-- [ ] (Seeded/generated docs) guidance keys present and body facts trace to
-      `source_materials`; no invented numbers.
-- [ ] (Whole KB) no orphan gaps the agent question set can't answer.
+- **Frontmatter examples:** [references/EXAMPLES.md](references/EXAMPLES.md)
+- **Quality checklist:** [references/QUALITY_BAR.md](references/QUALITY_BAR.md)
+- **Agent prompt template:** [references/KB_AGENT_PROMPT.md](references/KB_AGENT_PROMPT.md)
 
 ## Anti-Patterns
 
