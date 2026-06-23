@@ -6,7 +6,7 @@
 [![Obsidian community plugin](https://img.shields.io/badge/Obsidian-Community%20Plugin-7c3aed?style=for-the-badge)](https://community.obsidian.md/plugins/tpsreport-sync)
 [![skills.sh skill](https://img.shields.io/badge/skills.sh-tpsreport--kb-111?style=for-the-badge)](https://skills.sh/augmentableai/skills)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.2.2-blue?style=for-the-badge)](https://github.com/augmentableai/tpsreport-obsidian-sync/releases)
+[![Version](https://img.shields.io/badge/version-1.2.3-blue?style=for-the-badge)](https://github.com/augmentableai/tpsreport-obsidian-sync/releases)
 
 > **TPSReport by [Augmentable.ai](https://augmentable.ai)** — official Obsidian companion for [TPSReport AI Brain & Knowledge Management](https://tpsreport.pro).  
 > Write in your vault. Publish structured knowledge reports. Sync Markdown, metadata, and images to a cloud workspace built for Graph RAG, access control, and agent-ready retrieval.
@@ -187,4 +187,4 @@ Obsidian plugin · TPSReport by Augmentable.ai · knowledge management · Graph 
 
 MIT — see [LICENSE](LICENSE).
 
-**Current version:** `1.2.2` · Updates ship via [GitHub releases](https://github.com/augmentableai/tpsreport-obsidian-sync/releases) tagged to match `manifest.json`.
+**Current version:** `1.2.3` · Updates ship via [GitHub releases](https://github.com/augmentableai/tpsreport-obsidian-sync/releases) tagged to match `manifest.json`.

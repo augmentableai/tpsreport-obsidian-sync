@@ -1,7 +1,7 @@
 {
   "id": "tpsreport-sync",
   "name": "TPSReport",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "minAppVersion": "1.4.0",
   "description": "Sync notes, research folders, and images with TPSReport AI Brain & Knowledge Management. Requires a TPSReport account.",
   "author": "Augmentable LLC",
