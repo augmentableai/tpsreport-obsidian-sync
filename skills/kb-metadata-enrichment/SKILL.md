@@ -1,17 +1,17 @@
 ---
 name: KB Lifecycle Manager (TPSReport / Obsidian)
-description: End-to-end workflow manager for building, enriching, assessing, and iterating a rich Obsidian knowledge base that serves HiFi-Bots agents — seed -> guidance -> content -> RAG metadata -> assess existing reports -> test/iterate -> local build -> push -> online gating/visibility.
-tags: [tpsreport, obsidian, knowledge-base, rag, frontmatter, guidance, metadata, retrieval, lifecycle, hifibots, affiliate-kb]
+description: End-to-end workflow manager for building, enriching, assessing, and iterating a rich Obsidian knowledge base for TPSReport Graph RAG — seed -> guidance -> content -> RAG metadata -> assess existing reports -> test/iterate -> lint -> push -> online gating/visibility.
+tags: [tpsreport, obsidian, knowledge-base, rag, frontmatter, guidance, metadata, retrieval, lifecycle, graph-rag, affiliate-kb]
 ---
 
 # KB Lifecycle Manager Skill
 
-The single workflow manager for a HiFi-Bots knowledge base across its **whole
+The single workflow manager for a TPSReport knowledge base across its **whole
 lifecycle**: seeding new reports, generating content from guidance, enriching
 retrieval metadata, **assessing existing reports**, and continuously testing and
 iterating — then building locally, pushing through the Obsidian plugin, and
 controlling online visibility/gating. The end state is a rich, retrieval-tuned KB
-that the HiFi-Bots agents query at runtime.
+that TPSReport agents query at runtime.
 
 This supersedes the older "enrichment-only" scope: enrichment (Phase 3) is now one
 phase inside a closed build->push->measure->iterate loop.
@@ -278,7 +278,7 @@ hidden; only the `obs_` API key is configured):
 2. Run `Sync active report (push and delete sync)` (or `Sync all mapped reports`).
 3. **Gate / visibility:** set the report's sharing preset (Private / Team /
    Agency / Public) and **Knowledge Base (RAG) enabled** toggle so the right
-   HiFi-Bots agents/plans can retrieve it. RAG-on is what makes the doc queryable
+   TPSReport agents can retrieve it. RAG-on is what makes the doc queryable
    by agents; sharing preset controls who/which workspace sees it online.
 4. Open the rendered report in HiFi-WP and confirm summary/keywords/questions
    surface.
@@ -453,9 +453,9 @@ Phase 2 then fills `research_notes` + the body; Phase 3 adds the RAG layer above
 - Enriching once and never testing retrieval — the KB only gets good by looping
   Phase 6 against real agent questions.
 
-## Serving HiFi-Bots Agents (why this loop exists)
+## Serving TPSReport agents (why this loop exists)
 
-The KB's job is to answer the questions HiFi-Bots agents actually ask at runtime.
+The KB's job is to answer the questions TPSReport agents actually ask at runtime.
 That reframes every phase:
 
 - **Guidance + content (1-2)** decide whether an answer *exists*.

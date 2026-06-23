@@ -28,6 +28,8 @@ Most tools treat knowledge as isolated documents. TPSReport helps you **curate, 
 
 **This plugin** is the bridge between **Obsidian** (where you write) and **[TPSReport](https://tpsreport.pro)** (where you manage, index, query, and deliver knowledge at scale).
 
+**→ [Skills & resources hub](skills/README.md)** — agent workflows, install guides, frontmatter examples, [skills.sh](https://skills.sh) listing
+
 → [Learn more about TPSReport](docs/about-tpsreport.md) · [Use cases](docs/use-cases.md) · [FAQ](docs/faq.md)
 
 ---
@@ -120,31 +122,29 @@ Supported fields include `summary`, `keywords`, `tags`, `intents`, `scenarios`, 
 
 ---
 
-## KB authoring skills (Cursor / agents)
+## KB authoring skills & resources
 
-This repo includes **agent skills** for building retrieval-tuned knowledge bases that sync cleanly with TPSReport:
+**Full skills hub:** [`skills/`](skills/) — install guides, workflow, examples, directory listings.
 
-| Resource | Location |
+| Resource | Link |
 | --- | --- |
-| **Skills index** | [`skills/README.md`](skills/README.md) |
-| **KB Lifecycle skill** | [`skills/kb-metadata-enrichment/`](skills/kb-metadata-enrichment/) |
-| **Frontmatter linter** | `skills/kb-metadata-enrichment/kb_lint.py` |
-| **Copy-paste agent prompt** | [`skills/kb-metadata-enrichment/KB_AGENT_PROMPT.md`](skills/kb-metadata-enrichment/KB_AGENT_PROMPT.md) |
-
-Install into a Cursor project:
+| **Skills hub** | [skills/README.md](skills/README.md) |
+| **Install guide** | [skills/INSTALL.md](skills/INSTALL.md) |
+| **Workflow** | [skills/WORKFLOW.md](skills/WORKFLOW.md) |
+| **Examples** | [skills/examples/](skills/examples/) |
+| **KB Lifecycle skill** | [skills/kb-metadata-enrichment/](skills/kb-metadata-enrichment/) |
+| **Agent prompt template** | [skills/kb-metadata-enrichment/KB_AGENT_PROMPT.md](skills/kb-metadata-enrichment/KB_AGENT_PROMPT.md) |
+| **List on skills.sh** | [skills/DIRECTORIES.md](skills/DIRECTORIES.md) |
 
 ```bash
+# Install skill (Cursor)
 cp -r skills/kb-metadata-enrichment .cursor/skills/
-python .cursor/skills/kb-metadata-enrichment/kb_lint.py path/to/Your_KB/
-```
 
-Or via [skills.sh](https://skills.sh):
-
-```bash
+# Or via skills.sh
 npx skills add augmentableai/tpsreport-obsidian-sync/skills/kb-metadata-enrichment
 ```
 
-The skill covers seed → write → RAG metadata → lint → push workflow. The linter shares the same frontmatter contract as the plugin **Gatekeeper**.
+The skill covers seed → write → RAG metadata → lint → push. The linter shares the same frontmatter contract as the plugin **Gatekeeper**.
 
 ---
 
@@ -168,7 +168,8 @@ Full policy: **[tpsreport.pro/privacy](https://tpsreport.pro/privacy)** · Terms
 | **FAQ** | [docs/faq.md](docs/faq.md) |
 | **Plugin releases** | [GitHub Releases](https://github.com/augmentableai/tpsreport-obsidian-sync/releases) |
 | **Obsidian listing (official)** | [community.obsidian.md/plugins/tpsreport-sync](https://community.obsidian.md/plugins/tpsreport-sync) |
-| **KB authoring skills** | [skills/kb-metadata-enrichment/](skills/kb-metadata-enrichment/) |
+| **KB authoring skills** | [skills/](skills/) |
+| **skills.sh install** | `npx skills add augmentableai/tpsreport-obsidian-sync/skills/kb-metadata-enrichment` |
 | **Privacy** | [tpsreport.pro/privacy](https://tpsreport.pro/privacy) |
 | **Terms** | [tpsreport.pro/terms](https://tpsreport.pro/terms) |
 | **Support** | [arvind@augmentable.ai](mailto:arvind@augmentable.ai) |

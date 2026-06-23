@@ -57,7 +57,7 @@ This plugin ([tpsreport-obsidian-sync](https://github.com/augmentableai/tpsrepor
 
 **Official plugin listing:** [community.obsidian.md/plugins/tpsreport-sync](https://community.obsidian.md/plugins/tpsreport-sync)
 
-**Agent skills:** [`skills/kb-metadata-enrichment/`](../skills/kb-metadata-enrichment/) — lifecycle workflow + `kb_lint.py` for retrieval-tuned frontmatter.
+**Agent skills:** [`skills/`](../skills/) — lifecycle workflow + `kb_lint.py` for retrieval-tuned frontmatter. Install: `npx skills add augmentableai/tpsreport-obsidian-sync/skills/kb-metadata-enrichment`
 
 ---
 

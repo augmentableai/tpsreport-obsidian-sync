@@ -3,6 +3,7 @@
 Copy-paste prompt for Cursor, Claude Code, Codex, or any agent that supports project skills.
 
 **Skill location (this repo):** [`skills/kb-metadata-enrichment/`](.)  
+**Examples:** [`../examples/`](../examples/) · **Workflow:** [`../WORKFLOW.md`](../WORKFLOW.md)  
 **Official plugin listing:** [community.obsidian.md/plugins/tpsreport-sync](https://community.obsidian.md/plugins/tpsreport-sync)
 
 ---

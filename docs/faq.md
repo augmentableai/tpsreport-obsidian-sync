@@ -2,7 +2,7 @@
 
 Quick answers about **[TPSReport](https://tpsreport.pro)** and this plugin.
 
-→ [About TPSReport](about-tpsreport.md) · [Use cases](use-cases.md) · [README](../README.md)
+→ [About TPSReport](about-tpsreport.md) · [Use cases](use-cases.md) · [Skills hub](../skills/README.md) · [README](../README.md)
 
 ---
 
@@ -77,7 +77,13 @@ Delete sync is a separate, explicit operation for mapped folders. Review mapping
 
 Yes. This repo ships **[skills/kb-metadata-enrichment](../skills/kb-metadata-enrichment/)** — a lifecycle skill plus `kb_lint.py` that validates frontmatter against the same contract the plugin Gatekeeper uses.
 
-Copy to `.cursor/skills/kb-metadata-enrichment/` in your vault project, or install via [skills.sh](https://skills.sh).
+Copy to `.cursor/skills/kb-metadata-enrichment/` in your vault project, or install via [skills.sh](https://skills.sh):
+
+```bash
+npx skills add augmentableai/tpsreport-obsidian-sync/skills/kb-metadata-enrichment
+```
+
+Full docs: [skills/README.md](../skills/README.md) · [INSTALL.md](../skills/INSTALL.md) · [examples/](../skills/examples/)
 
 ---
 
