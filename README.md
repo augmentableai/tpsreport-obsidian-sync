@@ -1,6 +1,6 @@
 # TPSReport — Obsidian Plugin
 
-**Sync local research folders to [TPSReport](https://tpsreport.pro) — graph-native AI knowledge management built for teams, agents, and retrieval.**
+**Sync your Obsidian vault to [TPSReport](https://tpsreport.pro) — the optional authoring path for published knowledge bases and agent-ready retrieval.**
 
 [![TPSReport](https://img.shields.io/badge/TPSReport-tpsreport.pro-2563eb?style=for-the-badge)](https://tpsreport.pro)
 [![Obsidian community plugin](https://img.shields.io/badge/Obsidian-Community%20Plugin-7c3aed?style=for-the-badge)](https://community.obsidian.md/plugins/tpsreport-sync)
@@ -8,28 +8,35 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.2.3-blue?style=for-the-badge)](https://github.com/augmentableai/tpsreport-obsidian-sync/releases)
 
-> **TPSReport by [Augmentable.ai](https://augmentable.ai)** — official Obsidian companion for [TPSReport AI Brain & Knowledge Management](https://tpsreport.pro).  
-> Write in your vault. Publish structured knowledge reports. Sync Markdown, metadata, and images to a cloud workspace built for Graph RAG, access control, and agent-ready retrieval.
+> **TPSReport by [Augmentable.ai](https://augmentable.ai)** — official Obsidian companion for [TPSReport](https://tpsreport.pro).  
+> **Publish** structured knowledge bases · **Power** agentic workflows with metadata-rich retrieval · **Optional:** write in Obsidian and sync to the same KB contract.
 
 **Brand:** TPSReport by [Augmentable.ai](https://augmentable.ai)  
-**Home:** [tpsreport.pro](https://tpsreport.pro) · **Privacy:** [tpsreport.pro/privacy](https://tpsreport.pro/privacy) · **Terms:** [tpsreport.pro/terms](https://tpsreport.pro/terms)
+**Home:** [tpsreport.pro](https://tpsreport.pro) · **Plugin downloads:** [tpsreport.pro/downloads](https://tpsreport.pro/downloads) · **Privacy:** [tpsreport.pro/privacy](https://tpsreport.pro/privacy) · **Terms:** [tpsreport.pro/terms](https://tpsreport.pro/terms)
 
 ---
 
 ## What is TPSReport?
 
-**[TPSReport](https://tpsreport.pro)** turns scattered notes and research into **graph-structured intelligence** — not just files in a folder, but connected knowledge that AI agents and humans can navigate.
+**[TPSReport](https://tpsreport.pro)** is a workflow to **publish knowledge bases** and use them as an **AI brain for agentic execution** — not a note app or a generic chat wrapper.
 
-Most tools treat knowledge as isolated documents. TPSReport helps you **curate, codify, and connect** expertise into reports and collections optimized for:
+Two layers:
 
-- **Graph RAG** — vector search plus explicit relationships, categories, and metadata  
-- **Knowledge operations** — freshness, staleness alerts, and usage-aware maintenance  
-- **Multi-scope collections** — personal research, team wikis, and org-wide knowledge bases  
-- **Rendered reports** — publish, share, and control access from your [TPSReport workspace](https://tpsreport.pro)
+| Layer | What it does |
+| --- | --- |
+| **Publish KB** | Codify expertise into linked reports and collections — visibility, gating, monetization |
+| **AI brain** | Scoped retrieval with agent-oriented metadata — hybrid graph + vector, routing hints, negative signals |
 
-**This plugin** is the bridge between **Obsidian** (where you write) and **[TPSReport](https://tpsreport.pro)** (where you manage, index, query, and deliver knowledge at scale).
+You can build and ship **100% online**. **Obsidian is optional** — popular for offline vaults, wikilinks, and folder-native authoring.
 
-**→ [Skills & resources hub](https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/skills/README.md)** — agent workflows, install guides, frontmatter examples, [skills.sh](https://skills.sh) listing
+**This plugin** syncs vault folders into the same published KB and metadata contract:
+
+- Write locally in Obsidian (or edit online and pull back)
+- Publish folders as TPS Report collections
+- Push/pull markdown, images, and agent-ready frontmatter
+- Query and execute against your corpus in [TPSReport](https://tpsreport.pro)
+
+**→ [Install on tpsreport.pro/downloads](https://tpsreport.pro/downloads)** · [Skills & resources hub](https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/skills/README.md)
 
 → [Learn more about TPSReport](https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/docs/about-tpsreport.md) · [Use cases](https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/docs/use-cases.md) · [FAQ](https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/docs/faq.md)
 
@@ -39,9 +46,10 @@ Most tools treat knowledge as isolated documents. TPSReport helps you **curate, 
 
 | You want to… | TPSReport + Obsidian gives you… |
 | --- | --- |
-| Publish vault research as structured reports | One-click **Publish as New Report** from any folder |
-| Keep local notes and cloud reports in sync | Bidirectional push/pull with stable `node_id` identity |
-| Improve AI retrieval quality | Rich YAML frontmatter (`keywords`, `intents`, `entities`, …) synced to Graph RAG |
+| Publish vault folders as structured KB reports | One-click **Publish as New Report** from any folder |
+| Keep vault and cloud in sync | Bidirectional push/pull with stable `node_id` identity |
+| Agent-ready retrieval metadata | YAML frontmatter (`hyde_questions`, `retrieval_hint`, `defers_to`, …) synced to Graph RAG |
+| Validate before sync | **Gatekeeper** checks the metadata contract |
 | Sync images with Markdown | Optional embedded image upload/download |
 | Avoid silent overwrites | Conflict detection + reviewable conflict copies |
 | Control visibility & destinations | Per-report visibility, edit scope, and account destinations |
@@ -163,6 +171,7 @@ Full policy: **[tpsreport.pro/privacy](https://tpsreport.pro/privacy)** · Terms
 | Resource | URL |
 | --- | --- |
 | **TPSReport home** | [tpsreport.pro](https://tpsreport.pro) |
+| **Plugin downloads (mirror)** | [tpsreport.pro/downloads](https://tpsreport.pro/downloads) |
 | **What is TPSReport?** | [docs/about-tpsreport.md](https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/docs/about-tpsreport.md) |
 | **Use cases** | [docs/use-cases.md](https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/docs/use-cases.md) |
 | **FAQ** | [docs/faq.md](https://github.com/augmentableai/tpsreport-obsidian-sync/blob/main/docs/faq.md) |

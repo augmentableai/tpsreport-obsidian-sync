@@ -1,11 +1,15 @@
 # What is TPSReport?
 
-**[TPSReport](https://tpsreport.pro)** is an AI-native knowledge management platform for teams that need more than a flat folder of notes.
+**[TPSReport](https://tpsreport.pro)** is a workflow to **publish knowledge bases** and use them as an **AI brain for agentic execution**.
 
-Institutional knowledge is not just data — it is a **living network** of expertise, relationships, and context. TPSReport helps you curate that knowledge into **graph-structured reports and collections** that humans and AI agents can query with precision.
+Institutional knowledge is not just data — it is **codified, linked, and metadata-rich** so agents and humans can navigate it with precision. TPSReport helps you:
+
+1. **Publish** structured reports and collections (visibility, gating, destinations)
+2. **Index** for sophisticated retrieval — hybrid graph + vector, scoped collections
+3. **Execute** agentic workflows against your corpus — not the open web
 
 → **Home:** [tpsreport.pro](https://tpsreport.pro)  
-→ **Get started:** [tpsreport.pro](https://tpsreport.pro)  
+→ **Plugin (optional Obsidian path):** [tpsreport.pro/downloads](https://tpsreport.pro/downloads)  
 → **Privacy:** [tpsreport.pro/privacy](https://tpsreport.pro/privacy)  
 → **Terms:** [tpsreport.pro/terms](https://tpsreport.pro/terms)
 
@@ -13,72 +17,59 @@ Institutional knowledge is not just data — it is a **living network** of exper
 
 ## The problem TPSReport solves
 
-Most organizations store knowledge as **isolated documents**:
+Most tools treat knowledge as **isolated documents** or **flat vector dumps**:
 
-- Wikis without relationship metadata  
-- Notes that search engines and LLMs cannot contextualize  
-- Research scattered across tools with no single source of truth  
+- Wikis without agent-oriented metadata  
+- RAG that retrieves similar text but routes tasks to the wrong doc  
+- Research scattered across tools with no single published KB  
 - No visibility into stale, duplicated, or conflicting content  
 
-TPSReport treats knowledge as a **graph** — documents linked by categories, relationships, centrality, and rich frontmatter so retrieval understands *how* ideas connect, not just keyword overlap.
+TPSReport treats knowledge as **structured and codified** — linked reports with metadata designed for agentic KB workflows (`summary`, `hyde_questions`, `retrieval_hint`, `defers_to`, `canonical_for`, …).
 
 ---
 
 ## Core capabilities
 
-### Knowledge curation & codification
+### Publish knowledge bases
 
-Transform tribal knowledge into structured, taxonomized, graph-connected intelligence. Capture implicit expertise, build relationship metadata, and create category hierarchies that reflect how your organization actually thinks.
+Ship linked report collections with visibility controls, gating, and optional monetization. Author **100% online** or sync from Obsidian when that fits your stack.
 
-### Graph RAG systems
+### AI brain for agentic execution
 
-Combine **vector embeddings** with **explicit human-curated links**. Multi-hop traversal, centrality scoring, and metadata-aware search deliver context-aware retrieval for agents and analysts.
+Scoped retrieval collections combine embeddings with graph signals and routing metadata — so agents get the right context, defer subtopics, and skip what they should not touch.
 
 ### Knowledge operations (KnowOps)
 
-Monitor knowledge health over time: staleness detection, usage analytics, change impact analysis, and alerts when critical content needs attention.
-
-### Rendered knowledge reports
-
-Publish structured reports with visibility controls, edit scopes, destinations, and optional RAG indexing — all managed from your [TPSReport workspace](https://tpsreport.pro).
+Monitor knowledge health: staleness detection, usage analytics, change impact analysis, and alerts when critical content needs attention.
 
 ---
 
 ## How Obsidian fits in
 
-**Obsidian** is where many teams write, research, and draft. **TPSReport** is where that work becomes **managed, indexed, and agent-ready**.
+**Obsidian is optional architectural bedrock** — not the product story.
 
-This plugin ([tpsreport-obsidian-sync](https://github.com/augmentableai/tpsreport-obsidian-sync)) connects the two:
+- **Online-first:** Build and publish entirely in TPS Report  
+- **Vault-native:** Use Obsidian for offline editing, wikilinks, and folder workflows  
+
+This plugin ([tpsreport-obsidian-sync](https://github.com/augmentableai/tpsreport-obsidian-sync)) connects vault folders to the same published KB and metadata contract:
 
 1. Write locally in Obsidian  
 2. Publish folders as TPSReport reports  
 3. Sync changes bidirectionally  
-4. Query and operationalize knowledge in [TPSReport](https://tpsreport.pro)
+4. Agents and chat query the indexed corpus in [TPSReport](https://tpsreport.pro)
 
-**Official plugin listing:** [community.obsidian.md/plugins/tpsreport-sync](https://community.obsidian.md/plugins/tpsreport-sync)
+**Install:** [tpsreport.pro/downloads](https://tpsreport.pro/downloads) · [Obsidian community listing](https://community.obsidian.md/plugins/tpsreport-sync)
 
-**Agent skills:** [skills hub](../skills/README.md) — lifecycle workflow + `kb_lint.py` for retrieval-tuned frontmatter. Install: `npx skills add augmentableai/skills --skill tpsreport-knowledge-base-generation -y`
-
----
-
-## Technology highlights
-
-| Layer | Examples |
-| --- | --- |
-| **Graph storage** | Node/relationship models, taxonomy hierarchies, centrality |
-| **Vector retrieval** | Scoped collections, hybrid graph + embedding search |
-| **Curation UX** | Category management, related-doc linking, metadata enrichment |
-| **Operations** | Freshness monitoring, usage dashboards, health alerts |
+**Agent skills:** [skills hub](../skills/README.md) — `npx skills add augmentableai/skills --skill tpsreport-knowledge-base-generation -y`
 
 ---
 
 ## Who is TPSReport for?
 
-- **Research teams** building a Research OS  
-- **Operations & compliance** managing policy graphs  
-- **Product & strategy** linking insights to decisions  
-- **Customer success** curating support knowledge with usage signals  
-- **Technical writers** maintaining prerequisite-linked documentation  
+- **Teams publishing vertical KB products** (research OS, runbooks, policy graphs)  
+- **Creators** shipping gated knowledge collections  
+- **Agent builders** who need metadata-rich retrieval — not naive chunk search  
+- **Obsidian users** who want vault sync without giving up online authoring  
 
 See [use cases](use-cases.md) for detailed scenarios.
 
@@ -87,7 +78,7 @@ See [use cases](use-cases.md) for detailed scenarios.
 ## Get started
 
 1. Create an account at **[tpsreport.pro](https://tpsreport.pro)**  
-2. Install the plugin from the **[Obsidian community listing](https://community.obsidian.md/plugins/tpsreport-sync)**  
+2. *(Optional)* Install the plugin from **[tpsreport.pro/downloads](https://tpsreport.pro/downloads)** or the [Obsidian community listing](https://community.obsidian.md/plugins/tpsreport-sync)  
 3. Connect with your API key and publish your first report  
 4. *(Optional)* Install the KB skill: `npx skills add augmentableai/skills --skill tpsreport-knowledge-base-generation -y`
 
